@@ -384,6 +384,187 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
         }
 
+        /* سلة المشتري - نافذة منبثقة */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .cart-modal.active {
+            display: flex;
+        }
+
+        .cart-content {
+            background: #2a2a2a;
+            border: 3px solid #d4af37;
+            border-radius: 30px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(212, 175, 55, 0.5);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .cart-header h3 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 1.8rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: #d4af37;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-cart:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #3a3a3a;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border: 1px solid #d4af37;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            color: #f5e6b3;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-price {
+            color: #d4af37;
+            font-size: 1.1rem;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #8b0000;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .remove-item:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #1a1a1a;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border: 2px solid #d4af37;
+        }
+
+        .cart-total span {
+            color: #f5e6b3;
+            font-size: 1.2rem;
+        }
+
+        .cart-total .total-price {
+            color: #d4af37;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .checkout-btn {
+            flex: 2;
+            padding: 1rem;
+            background: linear-gradient(135deg, #d4af37, #f5e6b3);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 2px solid #d4af37;
+        }
+
+        .checkout-btn:hover {
+            background: transparent;
+            color: #d4af37;
+        }
+
+        .continue-btn {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .continue-btn:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+            font-size: 1.2rem;
+        }
+
         /* Custom Request Section - فخم جداً */
         .custom-request {
             background: #2a2a2a;
@@ -796,6 +977,10 @@
             .payment-options {
                 grid-template-columns: 1fr;
             }
+
+            .cart-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -811,12 +996,35 @@
             <a href="#videos">الفيديوهات</a>
             <a href="#custom">طلب خاص</a>
             <a href="#contact">اتصل بنا</a>
-            <div class="cart-icon">
+            <div class="cart-icon" onclick="openCart()">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count">0</span>
             </div>
         </div>
     </nav>
+
+    <!-- سلة المشتري - نافذة منبثقة -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>🛒 سلة المشتريات</h3>
+                <button class="close-cart" onclick="closeCart()">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-total">
+                <span>المجموع الكلي:</span>
+                <span class="total-price" id="cartTotal">$0</span>
+            </div>
+            <div class="cart-actions">
+                <button class="continue-btn" onclick="closeCart()">مواصلة التسوق</button>
+                <button class="checkout-btn" onclick="checkout()">
+                    <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <!-- Hero Section فخم -->
@@ -930,8 +1138,8 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i> إرسال الطلب الخاص
+                <button type="submit" class="submit-btn" onclick="submitCustomRequest(event)">
+                    <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
                 </button>
             </form>
         </section>
@@ -1025,6 +1233,10 @@
             { id: 8, title: '🎥 أسرار التلحين والتوزيع', description: 'تعلم كيف تلحن أغنية كاملة', price: 85, type: '🎬 دورة حصرية' }
         ];
 
+        // Cart array
+        let cart = [];
+        let cartCount = 0;
+
         // مصفوفة لتخزين طلبات المشتري
         let buyerRequests = JSON.parse(localStorage.getItem('buyerRequests')) || [];
 
@@ -1072,22 +1284,99 @@
             });
         }
 
-        // Cart functionality
-        let cart = [];
-        let cartCount = 0;
-
+        // Cart functions
         function addToCart(productId) {
-            cartCount++;
-            document.querySelector('.cart-count').textContent = cartCount;
-            
             // Find product
             let product = sheetMusicProducts.find(p => p.id === productId) || 
                          videoProducts.find(p => p.id === productId);
             
             if (product) {
                 cart.push(product);
+                cartCount++;
+                document.querySelector('.cart-count').textContent = cartCount;
+                updateCartDisplay();
                 alert(`✨ تم إضافة "${product.title}" إلى سلة المشتريات`);
             }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            cartCount--;
+            document.querySelector('.cart-count').textContent = cartCount;
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart">🛒 سلة المشتريات فارغة</div>';
+                cartTotalElement.textContent = '$0';
+                return;
+            }
+
+            let itemsHtml = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                itemsHtml += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-price">$${item.price}</div>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            cartItemsContainer.innerHTML = itemsHtml;
+            cartTotalElement.textContent = `$${total}`;
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').classList.add('active');
+            updateCartDisplay();
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.remove('active');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('⚠️ سلة المشتريات فارغة! أضف منتجات أولاً');
+                return;
+            }
+
+            // Prepare message for WhatsApp
+            let message = '*🛍️ طلب جديد من الموقع*%0A%0A';
+            message += '*المنتجات المطلوبة:*%0A';
+            
+            let total = 0;
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.title} - $${item.price}%0A`;
+                total += item.price;
+            });
+            
+            message += `%0A*المجموع الكلي:* $${total}%0A`;
+            message += `*رقم الطلب:* ${generateRequestNumber()}%0A`;
+            message += `%0A*تاريخ الطلب:* ${new Date().toLocaleDateString('ar-SA')}`;
+
+            // Encode the message and open WhatsApp
+            const whatsappUrl = `https://wa.me/966593436094?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // Clear cart after checkout
+            cart = [];
+            cartCount = 0;
+            document.querySelector('.cart-count').textContent = cartCount;
+            updateCartDisplay();
+            closeCart();
         }
 
         // Generate random request number
@@ -1109,7 +1398,6 @@
                     <div style="background: #2a2a2a; padding: 0.8rem; margin: 0.5rem 0; border-radius: 10px; border-right: 3px solid #d4af37;">
                         <div style="display: flex; justify-content: space-between; color: #f5e6b3;">
                             <span><i class="fas fa-lock"></i> ${req.requestNumber}</span>
-                            <span><i class="fas fa-${req.payment === 'paypal' ? 'paypal' : req.payment === 'rajhi' ? 'university' : 'check-circle'}"></i></span>
                         </div>
                         <div style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;">
                             ${req.name} - ${req.topic.substring(0, 30)}...
@@ -1130,9 +1418,9 @@
             });
         });
 
-        // Handle custom request form
-        document.getElementById('requestForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Handle custom request form submission
+        function submitCustomRequest(event) {
+            event.preventDefault();
             
             const price = document.getElementById('price').value;
             if (price < 20) {
@@ -1156,9 +1444,17 @@
             // Generate random request number
             const requestNumber = generateRequestNumber();
             
-            // Update display
-            document.getElementById('requestNumber').textContent = requestNumber;
-            
+            // Prepare message for WhatsApp
+            let message = '*🎵 طلب تعليمي خاص من الأستاذ محمد سلهب*%0A%0A';
+            message += `*رقم الطلب:* ${requestNumber}%0A`;
+            message += `*👤 الاسم:* ${name}%0A`;
+            message += `*📱 واتساب:* ${whatsapp}%0A`;
+            message += `*🎯 الموضوع:* ${topic}%0A`;
+            message += `*📊 المستوى:* ${level}%0A`;
+            message += `*💰 السعر:* $${price}%0A`;
+            message += `*💳 وسيلة الدفع:* ${paymentText}%0A%0A`;
+            message += `*تاريخ الطلب:* ${new Date().toLocaleDateString('ar-SA')}`;
+
             // Save to buyer requests
             const newRequest = {
                 requestNumber: requestNumber,
@@ -1177,28 +1473,15 @@
             // Update log
             updateRequestsLog();
             
-            // Show success message with all details
-            alert(`✨ تم إرسال طلبك الخاص بنجاح ✨
-
-📋 معلومات الطلب:
-━━━━━━━━━━━━━━━━
-🔐 رقم الطلب: ${requestNumber}
-👤 الاسم: ${name}
-📱 واتساب: ${whatsapp}
-🎯 الموضوع: ${topic}
-📊 المستوى: ${level}
-💰 السعر: $${price}
-💳 وسيلة الدفع: ${paymentText}
-━━━━━━━━━━━━━━━━
-
-📞 للتواصل: 00966593436094
-🔒 جميع معلومات المشتري مشفرة ومحفوظة
-
-سيتم التواصل معك قريباً شكراً لثقتك الغالية 🌹`);
+            // Open WhatsApp with the message
+            const whatsappUrl = `https://wa.me/966593436094?text=${message}`;
+            window.open(whatsappUrl, '_blank');
             
-            this.reset();
+            // Reset form
+            document.getElementById('requestForm').reset();
             document.getElementById('price').value = '20';
-            // Reset payment selection to default
+            
+            // Reset payment selection
             document.querySelectorAll('.payment-option').forEach((opt, index) => {
                 if (index === 0) {
                     opt.classList.add('selected');
@@ -1207,11 +1490,14 @@
                     opt.classList.remove('selected');
                 }
             });
-        });
+            
+            // Show success message
+            alert('✨ تم إرسال طلبك بنجاح عبر واتساب!');
+        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Set initial request number
+            // Set initial request number display
             document.getElementById('requestNumber').textContent = generateRequestNumber();
             
             // Load products
@@ -1222,9 +1508,21 @@
             
             // Set first payment option as selected by default
             document.querySelector('.payment-option').classList.add('selected');
+            
+            // Update cart display
+            updateCartDisplay();
         });
 
-        console.log('✨ موقع الأستاذ محمد سلهب الفخم جاهز مع خيارات الدفع ✨');
+        // Close cart when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('cartModal');
+            const content = document.querySelector('.cart-content');
+            if (event.target === modal) {
+                closeCart();
+            }
+        });
+
+        console.log('✨ موقع الأستاذ محمد سلهب الفخم جاهز مع سلة المشتريات وواتساب ✨');
     </script>
 </body>
 </html>
