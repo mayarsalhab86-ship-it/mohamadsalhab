@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -760,4 +759,704 @@
             color: #f5e6b3;
             padding: 0.3rem 1rem;
             border-radius: 30px;
-        
+            font-size: 0.8rem;
+            margin-right: 10px;
+            border: 1px solid #d4af37;
+        }
+
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .price-range input {
+            flex: 1;
+        }
+
+        .price-hint {
+            color: #d4af37;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #d4af37, #f5e6b3);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 2px solid #d4af37;
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 3px solid #d4af37;
+            border-radius: 50px;
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .contact-info .master-signature {
+            font-size: 3rem;
+            color: #d4af37;
+            margin: 1rem 0;
+            font-family: 'Playfair Display', serif;
+            border-top: 2px solid #d4af37;
+            border-bottom: 2px solid #d4af37;
+            padding: 1rem;
+            display: inline-block;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-item {
+            flex: 1;
+            min-width: 250px;
+            padding: 1.5rem;
+            background: #3a3a3a;
+            border: 1px solid #d4af37;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item a {
+            color: #f5e6b3;
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .private-note {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 30px;
+            font-size: 1rem;
+            color: #f5e6b3;
+            border: 1px dashed #d4af37;
+        }
+
+        footer {
+            background: #1a1a1a;
+            border-top: 2px solid #d4af37;
+            padding: 3rem 5%;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #f5e6b3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #d4af37;
+        }
+
+        footer p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .gold-text {
+            color: #d4af37;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .master-name {
+                font-size: 1.3rem;
+                margin-right: 0;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title::before,
+            .section-title::after {
+                display: none;
+            }
+
+            .custom-request {
+                padding: 2rem 1rem;
+            }
+
+            .contact-details {
+                flex-direction: column;
+            }
+
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <span class="master-name">الأستاذ محمد سلهب</span>
+        </div>
+        <div class="nav-links">
+            <a href="#home">الرئيسية</a>
+            <a href="#products">النوت الموسيقية</a>
+            <a href="#videos">الفيديوهات</a>
+            <a href="#custom">طلب خاص</a>
+            <a href="#contact">اتصل بنا</a>
+            <div class="cart-icon" onclick="window.openCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCountDisplay">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>🛒 سلة المشتريات</h3>
+                <button class="close-cart" onclick="window.closeCart()">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <div class="empty-cart">🛒 سلة المشتريات فارغة</div>
+            </div>
+            <div class="cart-total">
+                <span>المجموع الكلي:</span>
+                <span class="total-price" id="cartTotal">$0</span>
+            </div>
+            <div class="cart-actions">
+                <button class="continue-btn" onclick="window.closeCart()">مواصلة التسوق</button>
+                <button class="checkout-btn" onclick="window.checkout()">
+                    <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="hero" id="home">
+            <h1>الموسيقى العربية الأصيلة</h1>
+            <p>مع الأستاذ محمد سلهب، رحلة في عالم الموسيقى الشرقية العريقة. نوتات نادرة، فيديوهات حصرية، وتعليم راقٍ بلمسات فنية أصيلة.</p>
+            <div style="font-size: 4rem; margin-top: 2rem;">
+                <i class="fas fa-music"></i> 🎵 🎼
+            </div>
+        </section>
+
+        <section class="products-section" id="products">
+            <h2 class="section-title">النوت الموسيقية النادرة</h2>
+            <div class="products-grid" id="sheetMusicProducts"></div>
+        </section>
+
+        <section class="products-section" id="videos">
+            <h2 class="section-title">الدروس والفيديوهات الحصرية</h2>
+            <div class="products-grid" id="videoProducts"></div>
+        </section>
+
+        <section class="custom-request" id="custom">
+            <h2>طلب تعليمي خاص</h2>
+            <p style="text-align: center; color: #f5e6b3; margin-bottom: 2rem; font-size: 1.1rem;">🎯 حدد ما تريد تعلمه وسيتم تخصيص الدورة لك personally</p>
+            
+            <form class="request-form" id="requestForm" onsubmit="return window.submitCustomRequest(event)">
+                <div class="form-group">
+                    <label>👤 الاسم الكامل</label>
+                    <input type="text" id="fullName" placeholder="أدخل اسمك الكريم" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>📱 رقم الواتساب (خاص بالمشتري)</label>
+                    <input type="tel" id="whatsapp" placeholder="أدخل رقم واتساب للتواصل الخاص" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>🎯 الموضوع المطلوب (تفاصيل الطلب)</label>
+                    <textarea id="topic" placeholder="أدخل التفاصيل الدقيقة: نوتة معينة، مقام محدد، تقنية خاصة، تحليل أغنية..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>📊 مستواك الحالي</label>
+                    <select id="level">
+                        <option>🌱 مبتدئ - أحب التعلم من البداية</option>
+                        <option>📈 متوسط - عندي أساسيات وأريد التطوير</option>
+                        <option>👑 متقدم - محترف وأريد التعمق</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>💰 وسيلة الدفع المفضلة</label>
+                    <div class="payment-options">
+                        <label class="payment-option selected">
+                            <input type="radio" name="payment" value="paypal" checked>
+                            <i class="fab fa-paypal payment-icon"></i>
+                            <span class="payment-label">PayPal</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="rajhi">
+                            <i class="fas fa-university payment-icon"></i>
+                            <span class="payment-label">مصرف الراجحي</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="both">
+                            <i class="fas fa-check-circle payment-icon"></i>
+                            <span class="payment-label">الاثنين معاً</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>💰 السعر المناسب (بالدولار)</label>
+                    <div class="price-range">
+                        <input type="number" id="price" min="20" step="5" value="20" required>
+                        <span style="color: #d4af37;">$</span>
+                    </div>
+                    <div class="price-hint">
+                        <i class="fas fa-crown" style="color: #d4af37;"></i> الحد الأدنى 20 دولار (لأنك تستحق الأفضل)
+                    </div>
+                </div>
+
+                <div class="request-number">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                        <span class="private-tag"><i class="fas fa-lock"></i> خاص جداً</span>
+                        <span>رقم الطلب:</span>
+                        <span class="number" id="requestNumber">MS-2024-0000</span>
+                    </div>
+                    <div class="private-info">
+                        <i class="fas fa-phone-alt"></i> للتواصل: 00966593436094
+                    </div>
+                    <div class="private-info" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                        <i class="fas fa-shield-alt"></i> معلومات المشتري: مشفرة وآمنة 🔒
+                    </div>
+                </div>
+
+                <div style="background: #1a1a1a; border-radius: 20px; padding: 1rem; margin: 2rem 0; border: 1px solid #d4af37;">
+                    <h3 style="color: #d4af37; margin-bottom: 1rem; font-size: 1.3rem;">
+                        <i class="fas fa-history"></i> سجل طلبات المشتري الخاصة
+                    </h3>
+                    <div id="requestsLog" style="max-height: 200px; overflow-y: auto; padding: 0.5rem;"></div>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+                </button>
+            </form>
+        </section>
+
+        <section class="contact-info" id="contact">
+            <h3>
+                <i class="fas fa-star"></i>
+                الأستاذ محمد سلهب
+                <i class="fas fa-star"></i>
+            </h3>
+            
+            <div class="master-signature">
+                ✦ الموسيقى فن الأرواح ✦
+            </div>
+            
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <h4 style="color: #d4af37;">رقم التواصل المباشر</h4>
+                    <a href="tel:00966593436094">00966593436094</a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <h4 style="color: #d4af37;">واتساب (المشتري)</h4>
+                    <a href="https://wa.me/966593436094">00966593436094</a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h4 style="color: #d4af37;">للطلبات الخاصة</h4>
+                    <a href="tel:00966593436094">00966593436094</a>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                <div style="background: #2a2a2a; padding: 1rem; border-radius: 15px; border: 1px solid #d4af37;">
+                    <i class="fab fa-paypal" style="color: #d4af37; font-size: 2rem;"></i>
+                    <h4 style="color: #f5e6b3;">PayPal</h4>
+                    <p style="color: #888; font-size: 0.8rem;">متاح للدفع الدولي</p>
+                </div>
+                <div style="background: #2a2a2a; padding: 1rem; border-radius: 15px; border: 1px solid #d4af37;">
+                    <i class="fas fa-university" style="color: #d4af37; font-size: 2rem;"></i>
+                    <h4 style="color: #f5e6b3;">مصرف الراجحي</h4>
+                    <p style="color: #888; font-size: 0.8rem;">تحويل بنكي محلي</p>
+                </div>
+                <div style="background: #2a2a2a; padding: 1rem; border-radius: 15px; border: 1px solid #d4af37;">
+                    <i class="fas fa-shield-alt" style="color: #d4af37; font-size: 2rem;"></i>
+                    <h4 style="color: #f5e6b3;">دفع آمن</h4>
+                    <p style="color: #888; font-size: 0.8rem;">مشفّر بالكامل 🔒</p>
+                </div>
+            </div>
+            
+            <div class="private-note">
+                <i class="fas fa-crown"></i>
+                للتواصل المباشر: <strong style="color: #d4af37;">00966593436094</strong> - الأستاذ محمد سلهب متاح للرد على استفساراتكم personally.
+                <i class="fas fa-crown"></i>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-info-circle"></i> عن الأستاذ محمد سلهب</a>
+            <a href="#"><i class="fas fa-file-contract"></i> الشروط والأحكام</a>
+            <a href="#"><i class="fas fa-lock"></i> سياسة الخصوصية</a>
+            <a href="#"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a>
+        </div>
+        <p>جميع الحقوق محفوظة &copy; 2024 - الأستاذ محمد سلهب</p>
+        <p style="color: #888; margin-top: 0.5rem;">
+            <span class="gold-text">✦ الموسيقى العربية الأصيلة ✦</span>
+        </p>
+    </footer>
+
+    <script>
+        window.sheetMusicProducts = [
+            { id: 1, title: 'نوتة "أم كلثوم - أنت عمري" (نسخة نادرة)', description: 'نوتة كاملة بخط اليد مع تحليل مقامي مفصل', price: 25, type: '📜 نوتة نادرة' },
+            { id: 2, title: 'نوتة "فيروز - سألوني الناس" (الأصلية)', description: 'النوتة الأصلية مع شرح المقامات والتحويلات', price: 20, type: '📜 نوتة موسيقية' },
+            { id: 3, title: 'نوتة "محمد عبد الوهاب - أنت عمري"', description: 'نسخة مصححة مع ملاحظات الأستاذ محمد', price: 30, type: '📜 نوتة نادرة' },
+            { id: 4, title: 'نوتة "عبد الحليم حافظ - قارئة الفنجان"', description: 'نوتة كاملة مع التوزيع الأوركسترالي', price: 35, type: '📜 نوتة موسيقية' }
+        ];
+
+        window.videoProducts = [
+            { id: 5, title: '🎥 دورة المقامات العربية - المستوى الأول', description: '12 فيديو حصري مع تمارين تطبيقية', price: 75, type: '🎬 دورة مصورة' },
+            { id: 6, title: '🎥 تقنيات العزف على العود - احتراف', description: 'دورة متقدمة مع الأستاذ محمد', price: 95, type: '🎬 دورة حصرية' },
+            { id: 7, title: '🎥 قراءة النوتة للمحترفين', description: 'من الصفر إلى الاحتراف في 10 دروس', price: 65, type: '🎬 دورة مصورة' },
+            { id: 8, title: '🎥 أسرار التلحين والتوزيع', description: 'تعلم كيف تلحن أغنية كاملة', price: 85, type: '🎬 دورة حصرية' }
+        ];
+
+        window.cart = [];
+        window.cartCount = 0;
+        window.buyerRequests = JSON.parse(localStorage.getItem('buyerRequests')) || [];
+
+        window.loadProducts = function() {
+            const sheetContainer = document.getElementById('sheetMusicProducts');
+            const videoContainer = document.getElementById('videoProducts');
+
+            window.sheetMusicProducts.forEach(product => {
+                sheetContainer.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-type">${product.type}</span>
+                            <h3 class="product-title">${product.title}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-price">$${product.price}</div>
+                            <button class="add-to-cart" onclick="window.addToCart(${product.id})">
+                                <i class="fas fa-shopping-cart"></i> أضف إلى السلة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            window.videoProducts.forEach(product => {
+                videoContainer.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-type">${product.type}</span>
+                            <h3 class="product-title">${product.title}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-price">$${product.price}</div>
+                            <button class="add-to-cart" onclick="window.addToCart(${product.id})">
+                                <i class="fas fa-shopping-cart"></i> أضف إلى السلة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+
+        window.addToCart = function(productId) {
+            let product = window.sheetMusicProducts.find(p => p.id === productId) || 
+                         window.videoProducts.find(p => p.id === productId);
+            
+            if (product) {
+                window.cart.push(product);
+                window.cartCount++;
+                document.getElementById('cartCountDisplay').textContent = window.cartCount;
+                window.updateCartDisplay();
+                alert(`✨ تم إضافة "${product.title}" إلى سلة المشتريات`);
+            }
+        };
+
+        window.removeFromCart = function(index) {
+            window.cart.splice(index, 1);
+            window.cartCount--;
+            document.getElementById('cartCountDisplay').textContent = window.cartCount;
+            window.updateCartDisplay();
+        };
+
+        window.updateCartDisplay = function() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            if (window.cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart">🛒 سلة المشتريات فارغة</div>';
+                cartTotalElement.textContent = '$0';
+                return;
+            }
+
+            let itemsHtml = '';
+            let total = 0;
+
+            window.cart.forEach((item, index) => {
+                total += item.price;
+                itemsHtml += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-price">$${item.price}</div>
+                        </div>
+                        <button class="remove-item" onclick="window.removeFromCart(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            cartItemsContainer.innerHTML = itemsHtml;
+            cartTotalElement.textContent = `$${total}`;
+        };
+
+        window.openCart = function() {
+            document.getElementById('cartModal').classList.add('active');
+            window.updateCartDisplay();
+        };
+
+        window.closeCart = function() {
+            document.getElementById('cartModal').classList.remove('active');
+        };
+
+        window.checkout = function() {
+            if (window.cart.length === 0) {
+                alert('⚠️ سلة المشتريات فارغة! أضف منتجات أولاً');
+                return;
+            }
+
+            let message = '*🛍️ طلب جديد من الموقع*%0A%0A';
+            message += '*المنتجات المطلوبة:*%0A';
+            
+            let total = 0;
+            window.cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.title} - $${item.price}%0A`;
+                total += item.price;
+            });
+            
+            message += `%0A*المجموع الكلي:* $${total}%0A`;
+            message += `*رقم الطلب:* ${window.generateRequestNumber()}%0A`;
+            message += `%0A*تاريخ الطلب:* ${new Date().toLocaleDateString('ar-SA')}`;
+
+            const whatsappUrl = `https://wa.me/966593436094?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            
+            window.cart = [];
+            window.cartCount = 0;
+            document.getElementById('cartCountDisplay').textContent = window.cartCount;
+            window.updateCartDisplay();
+            window.closeCart();
+        };
+
+        window.generateRequestNumber = function() {
+            const year = new Date().getFullYear();
+            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+            return `MS-${year}-${randomLetter}${random}`;
+        };
+
+        window.updateRequestsLog = function() {
+            const logContainer = document.getElementById('requestsLog');
+            logContainer.innerHTML = '';
+            
+            window.buyerRequests.slice(-5).reverse().forEach(req => {
+                logContainer.innerHTML += `
+                    <div style="background: #2a2a2a; padding: 0.8rem; margin: 0.5rem 0; border-radius: 10px; border-right: 3px solid #d4af37;">
+                        <div style="display: flex; justify-content: space-between; color: #f5e6b3;">
+                            <span><i class="fas fa-lock"></i> ${req.requestNumber}</span>
+                        </div>
+                        <div style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;">
+                            ${req.name} - ${req.topic.substring(0, 30)}...
+                        </div>
+                    </div>
+                `;
+            });
+        };
+
+        window.submitCustomRequest = function(event) {
+            event.preventDefault();
+            
+            const price = document.getElementById('price').value;
+            if (price < 20) {
+                alert('⚠️ الحد الأدنى للسعر هو 20 دولار');
+                return false;
+            }
+
+            const name = document.getElementById('fullName').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const topic = document.getElementById('topic').value;
+            const level = document.getElementById('level').value;
+            const payment = document.querySelector('input[name="payment"]:checked').value;
+            
+            let paymentText = '';
+            if (payment === 'paypal') paymentText = 'PayPal';
+            else if (payment === 'rajhi') paymentText = 'مصرف الراجحي';
+            else paymentText = 'PayPal + الراجحي';
+            
+            const requestNumber = window.generateRequestNumber();
+            
+            let message = '*🎵 طلب تعليمي خاص من الأستاذ محمد سلهب*%0A%0A';
+            message += `*رقم الطلب:* ${requestNumber}%0A`;
+            message += `*👤 الاسم:* ${name}%0A`;
+            message += `*📱 واتساب:* ${whatsapp}%0A`;
+            message += `*🎯 الموضوع:* ${topic}%0A`;
+            message += `*📊 المستوى:* ${level}%0A`;
+            message += `*💰 السعر:* $${price}%0A`;
+            message += `*💳 وسيلة الدفع:* ${paymentText}%0A%0A`;
+            message += `*تاريخ الطلب:* ${new Date().toLocaleDateString('ar-SA')}`;
+
+            const newRequest = {
+                requestNumber: requestNumber,
+                name: name,
+                whatsapp: whatsapp,
+                topic: topic,
+                level: level,
+                price: price,
+                payment: payment,
+                timestamp: new Date().toISOString()
+            };
+            
+            window.buyerRequests.push(newRequest);
+            localStorage.setItem('buyerRequests', JSON.stringify(window.buyerRequests));
+            
+            window.updateRequestsLog();
+            
+            const whatsappUrl = `https://wa.me/966593436094?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            
+            document.getElementById('requestForm').reset();
+            document.getElementById('price').value = '20';
+            
+            document.querySelectorAll('.payment-option').forEach((opt, index) => {
+                if (index === 0) {
+                    opt.classList.add('selected');
+                    opt.querySelector('input[type="radio"]').checked = true;
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+            
+            alert('✨ تم إرسال طلبك بنجاح عبر واتساب!');
+            return false;
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('requestNumber').textContent = window.generateRequestNumber();
+            window.loadProducts();
+            window.updateRequestsLog();
+            
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                });
+            });
+        });
+
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                window.closeCart();
+            }
+        });
+
+        console.log('✨ موقع الأستاذ محمد سلهب الفخم جاهز ✨');
+    </script>
+</body>
+</html>
