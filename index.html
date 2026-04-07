@@ -1,447 +1,443 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>الأستاذ محمد سلهب - الموسيقى العربية الأصيلة</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Reset & base */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: #0a0a0a;
-            color: #d4af37;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>الأستاذ محمد سلهب - الموسيقى العربية الأصيلة</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== Variables & Reset ========== */
+    :root{
+      --bg-1:#0a0a0a;
+      --panel:#1a1a1a;
+      --accent:#d4af37;
+      --accent-soft:#f5e6b3;
+      --muted:#c0c0c0;
+      --glass: rgba(26,26,26,0.72);
+      --radius:20px;
+      --container-padding:clamp(12px, 3vw, 32px);
+      --transition: 300ms cubic-bezier(.2,.9,.3,1);
+      --max-width:1400px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg-1);
+      color: var(--accent);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      overflow-x:hidden;
+      line-height:1.6;
+    }
 
-        /* background gradient & large faint notes */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
-            z-index: -3;
-        }
-        body::after {
-            content: '♫ ♪ ♫';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18rem;
-            color: rgba(212, 175, 55, 0.02);
-            white-space: nowrap;
-            z-index: -2;
-            pointer-events: none;
-            font-family: 'Playfair Display', serif;
-        }
+    /* background + large faint notes */
+    body::before{
+      content:'';
+      position:fixed;inset:0;
+      background:linear-gradient(135deg,#1a1a1a 0%, #262626 50%, #111 100%);
+      z-index:-4;
+    }
+    body::after{
+      content:'♫ ♪ ♫';
+      position:fixed;
+      top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      font-size: clamp(8rem, 18vw, 18rem);
+      color: rgba(212,175,55,0.02);
+      z-index:-3;
+      font-family:'Playfair Display', serif;
+      pointer-events:none;
+      white-space:nowrap;
+    }
 
-        /* 3D-like oud decoration in background (CSS-based) */
-        .oud-3d {
-            position: fixed;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%) rotateY(-20deg) rotate(-10deg);
-            width: 520px;
-            height: 520px;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.12;
-            filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6));
-            transform-style: preserve-3d;
-        }
+    /* ========== Decorative Oud (responsive + subtle parallax) ========== */
+    .oud-3d{
+      position:fixed;
+      inset:auto 4% auto auto; /* top/right/bottom/left */
+      top:50%;
+      transform:translateY(-50%) rotateY(-16deg) rotate(-10deg);
+      width:min(44vw,520px);
+      height:auto;
+      pointer-events:none;
+      z-index:-2;
+      opacity:0.12;
+      filter:drop-shadow(0 30px 40px rgba(0,0,0,0.6));
+      transform-style:preserve-3d;
+      transition: transform calc(var(--transition));
+    }
+    .oud{ width:80%; margin-inline-start:auto; aspect-ratio:1/1; position:relative; }
+    .oud .body{
+      position:absolute; right:0; top:10%;
+      width:72%; height:78%;
+      background: radial-gradient(120px 100px at 30% 30%, #f0c27b, #c78b42 40%, #8b4a1a 100%);
+      border-radius: 60% 40% 55% 45% / 60% 60% 40% 40%;
+      transform: rotateX(12deg) rotateY(-8deg);
+      box-shadow: inset -20px 30px 40px rgba(0,0,0,0.45), 0 20px 60px rgba(0,0,0,0.6);
+      border:2px solid rgba(0,0,0,0.08);
+    }
+    .oud .soundhole{ position:absolute; right:28%; top:46%; width:18%; aspect-ratio:1/1; border-radius:50%;
+      background: radial-gradient(circle at 35% 35%, #1a1a1a 0%, #2a2a2a 40%, rgba(0,0,0,0.6) 100%);
+      transform:translateZ(30px); border:6px solid rgba(0,0,0,0.25); box-shadow: inset 0 6px 12px rgba(255,255,255,0.02);
+    }
+    .oud .neck{ position:absolute; right:80%; top:8%; width:23%; height:45%; background:linear-gradient(180deg,#3a2b1a,#2a1a0f); border-radius:12px; transform-origin:right center; transform: rotate(-18deg) translateZ(20px); box-shadow:inset 0 -8px 18px rgba(0,0,0,0.5); }
+    .oud .frets{ position:absolute; left:12px; top:20px; bottom:20px; width:4px; background:linear-gradient(#b9894a,#7a4f28); border-radius:2px; opacity:0.95; }
+    .oud .bridge{ position:absolute; right:42%; top:86%; width:8%; height:2.6%; background:linear-gradient(90deg,#2b1a12,#1a0f08); border-radius:6px; transform:translateZ(18px)}
+    .oud .shine{ position:absolute; right:18%; top:6%; width:36%; height:24%; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 30%); transform:translateZ(40px) rotate(-8deg); border-radius:50%; mix-blend-mode:overlay; }
 
-        .oud {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%) rotate(-6deg);
-            width: 420px;
-            height: 420px;
-            perspective: 1000px;
-        }
+    /* ========== Navbar (sticky + 3D creative menu) ========== */
+    .navbar{
+      position:sticky; top:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: clamp(10px, 2vw, 18px) var(--container-padding);
+      background: linear-gradient(180deg, rgba(26,26,26,0.92), rgba(20,20,20,0.6));
+      border-bottom:2px solid var(--accent);
+      box-shadow: 0 8px 30px rgba(212,175,55,0.12);
+      backdrop-filter: blur(6px);
+      isolation:isolate;
+    }
+    .logo{ font-family:'Playfair Display', serif; font-size: clamp(1.25rem, 2.4vw, 2.2rem); color:var(--accent); font-weight:700; text-shadow:2px 2px 6px rgba(0,0,0,0.5)}
+    .header-right{display:flex; align-items:center; gap:0.75rem}
+    .master-name{
+      font-family:'Playfair Display', serif;
+      font-size: clamp(0.9rem, 1.6vw, 1.25rem);
+      font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent-soft));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      padding:6px 14px; border-radius:999px; border:2px solid var(--accent);
+      box-shadow: 0 6px 18px rgba(212,175,55,0.06);
+      transform-style:preserve-3d;
+    }
+    .nav-links{
+      display:flex; gap:clamp(10px,2vw,28px); align-items:center;
+    }
+    .nav-links a{
+      text-decoration:none; color:var(--accent-soft); font-weight:600; font-size:clamp(0.95rem,1.4vw,1.05rem);
+      padding:6px 6px; position:relative; transition:transform var(--transition), color var(--transition);
+      transform-style:preserve-3d;
+    }
+    .nav-links a::after{
+      content:''; position:absolute; inset:auto 0 0 0; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent-soft)); transform-origin:left; transform:scaleX(0); transition:transform 220ms;
+    }
+    .nav-links a:hover{ color:var(--accent); transform: translateZ(12px) translateY(-3px); text-shadow:0 6px 20px rgba(0,0,0,0.6)}
+    .nav-links a:hover::after{ transform:scaleX(1) }
 
-        /* Oud body (rounded) */
-        .oud .body {
-            position: absolute;
-            right: 0;
-            top: 45px;
-            width: 320px;
-            height: 380px;
-            background: radial-gradient(120px 100px at 30% 30%, #f0c27b, #c78b42 40%, #8b4a1a 100%);
-            border-radius: 60% 40% 55% 45% / 60% 60% 40% 40%;
-            transform: rotateX(12deg) rotateY(-8deg);
-            box-shadow:
-                inset -20px 30px 40px rgba(0,0,0,0.45),
-                0 20px 60px rgba(0,0,0,0.6);
-            border: 2px solid rgba(0,0,0,0.08);
-        }
+    /* Hamburger for small screens */
+    .hamburger{
+      display:none;
+      width:44px;height:44px;border-radius:10px;border:2px solid rgba(212,175,55,0.12);
+      background:transparent;color:var(--accent);align-items:center;justify-content:center;
+      cursor:pointer; transition:all var(--transition);
+    }
+    .hamburger:focus{outline:3px solid rgba(212,175,55,0.12)}
 
-        /* depth layers to enhance 3D feeling */
-        .oud .body::before,
-        .oud .body::after {
-            content: '';
-            position: absolute;
-            border-radius: inherit;
-            inset: 10px;
-            transform: translateZ(-10px);
-            background: linear-gradient(180deg, rgba(0,0,0,0.06), transparent);
-        }
+    /* Off-canvas 3D menu (RTL -> slides from right) */
+    .offcanvas{
+      position:fixed; top:0; right:0; height:100vh; width:min(84vw,420px);
+      background: linear-gradient(180deg,#111,#1e1e1e); box-shadow:-40px 0 80px rgba(0,0,0,0.6);
+      transform: translateX(110%) perspective(1400px) rotateY(-18deg);
+      transition: transform var(--transition);
+      z-index:1500; padding:30px 20px; display:flex; flex-direction:column; gap:20px;
+      border-left:1px solid rgba(212,175,55,0.06);
+      backdrop-filter: blur(6px);
+    }
+    .offcanvas.open{ transform: translateX(0) perspective(1400px) rotateY(0deg) }
+    .offcanvas .close-btn{ align-self:flex-start; background:transparent;border:0;color:var(--accent); font-size:1.1rem; cursor:pointer }
+    .offcanvas nav{ display:flex; flex-direction:column; gap:10px; margin-top:10px }
+    .offcanvas nav a{ padding:12px 14px; border-radius:10px; color:var(--accent-soft); text-decoration:none; display:block; font-weight:600; transition: background var(--transition), transform var(--transition); }
+    .offcanvas nav a:hover{ background: linear-gradient(90deg, rgba(212,175,55,0.06), rgba(212,175,55,0.02)); transform: translateZ(8px); color:var(--accent) }
 
-        /* soundhole */
-        .oud .soundhole {
-            position: absolute;
-            right: 110px;
-            top: 160px;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #1a1a1a 0%, #2a2a2a 40%, rgba(0,0,0,0.6) 100%);
-            box-shadow: inset 0 6px 12px rgba(255,255,255,0.02), 0 6px 20px rgba(0,0,0,0.6);
-            transform: translateZ(30px);
-            border: 6px solid rgba(0,0,0,0.25);
-        }
+    /* Container + hero */
+    .container{ max-width:var(--max-width); margin:2rem auto; padding:0 var(--container-padding); position:relative; z-index:2; }
+    .hero{
+      background: linear-gradient(135deg,#2a2a2a,#141414);
+      border:2px solid var(--accent); border-radius:22px; padding: clamp(28px,6vw,64px);
+      text-align:center; color:var(--accent-soft); box-shadow:0 20px 50px rgba(212,175,55,0.14);
+    }
+    .hero h1{ font-family:'Playfair Display', serif; font-size: clamp(1.6rem, 5vw, 3.2rem); margin-bottom:0.8rem; color:var(--accent); text-shadow:0 0 20px rgba(212,175,55,0.35) }
+    .hero p{ font-size: clamp(0.95rem, 2.2vw, 1.2rem); max-width:900px; margin:0 auto; color:var(--muted); line-height:1.85 }
 
-        /* rosette decoration */
-        .oud .soundhole::before {
-            content: '';
-            position: absolute;
-            inset: 10px;
-            border-radius: 50%;
-            background: repeating-conic-gradient(
-                from 0deg,
-                rgba(0,0,0,0.18) 0deg 10deg,
-                rgba(255,255,255,0.02) 10deg 20deg
-            );
-            opacity: 0.25;
-        }
+    /* Subscriptions */
+    .subscriptions{ margin:3rem 0 6rem; text-align:center }
+    .section-title{ font-family:'Playfair Display', serif; color:var(--accent); font-size: clamp(1.25rem,2.6vw,2.2rem); margin-bottom:1.25rem; display:inline-block }
+    .subs-grid{ display:grid; gap:1rem; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); margin-top:1.5rem; align-items:start }
+    .sub-card{
+      background: linear-gradient(180deg,#252525,#2f2f2f);
+      border:2px solid var(--accent); border-radius:16px; padding:1.4rem; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      transform-style:preserve-3d; will-change:transform;
+    }
+    .sub-card:hover{ transform: translateY(-10px) rotateX(4deg) translateZ(6px); box-shadow: 0 30px 60px rgba(212,175,55,0.14); border-color:var(--accent-soft) }
+    .sub-name{ font-family:'Playfair Display', serif; color:var(--accent); font-size:1.15rem; margin-bottom:0.6rem }
+    .sub-price{ font-size: clamp(1.2rem,2.4vw,2rem); color:var(--accent-soft); font-weight:700; margin-bottom:0.5rem }
+    .sub-desc{ color:var(--muted); font-size:0.95rem; margin-bottom:1rem; line-height:1.6 }
+    .subscribe-btn{
+      display:inline-block; padding:10px 14px; background:transparent; color:var(--accent); border:2px solid var(--accent); border-radius:12px; font-weight:700; cursor:pointer; transition: all var(--transition);
+    }
+    .subscribe-btn:hover{ background:var(--accent); color:#111; box-shadow: 0 10px 26px rgba(212,175,55,0.18) }
 
-        /* neck */
-        .oud .neck {
-            position: absolute;
-            right: 320px;
-            top: 70px;
-            width: 120px;
-            height: 260px;
-            background: linear-gradient(180deg, #3a2b1a, #2a1a0f);
-            border-radius: 20px;
-            transform-origin: right center;
-            transform: rotate(-18deg) translateZ(20px);
-            box-shadow: inset 0 -8px 18px rgba(0,0,0,0.5);
-            border: 1px solid rgba(0,0,0,0.2);
-        }
+    /* Products */
+    .products-grid{ display:grid; gap:1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); margin-top:1rem }
+    .product-card{ background:#222; border:2px solid var(--accent); border-radius:18px; overflow:hidden; transition: transform var(--transition), box-shadow var(--transition); transform-style:preserve-3d; perspective:1200px; }
+    .product-card:hover{ transform: translateY(-12px) rotateX(6deg) translateZ(8px); box-shadow: 0 30px 80px rgba(0,0,0,0.6) }
+    .product-image{ height:180px; background:linear-gradient(135deg,#151515,#3a3a3a); display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:3rem; border-bottom:1px solid rgba(212,175,55,0.06) }
+    .product-info{ padding:1.25rem }
+    .product-title{ font-family:'Playfair Display', serif; color:var(--accent-soft); font-weight:700; margin-bottom:0.5rem }
+    .product-description{ color:var(--muted); font-size:0.95rem; margin-bottom:0.9rem }
+    .product-price{ color:var(--accent); font-size:1.15rem; font-weight:700 }
 
-        .oud .frets {
-            position: absolute;
-            left: 12px;
-            top: 20px;
-            bottom: 20px;
-            width: 4px;
-            background: linear-gradient(#b9894a, #7a4f28);
-            border-radius: 2px;
-            opacity: 0.95;
-        }
+    /* Contact + footer */
+    footer{ margin:3.5rem 0; color:#888; text-align:center }
 
-        /* bridge */
-        .oud .bridge {
-            position: absolute;
-            right: 135px;
-            top: 330px;
-            width: 40px;
-            height: 12px;
-            background: linear-gradient(90deg, #2b1a12, #1a0f08);
-            border-radius: 6px;
-            transform: translateZ(18px);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.6);
-        }
+    /* Modal (nice small overlay for subscribe) */
+    .modal-backdrop{
+      position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
+      z-index:1600; opacity:0; pointer-events:none; transition:opacity var(--transition);
+    }
+    .modal-backdrop.open{ opacity:1; pointer-events:auto }
+    .modal{
+      width:min(520px,94vw); background:linear-gradient(180deg,#111,#1b1b1b); border:2px solid rgba(212,175,55,0.08); padding:22px; border-radius:14px; color:var(--accent-soft); box-shadow: 0 30px 90px rgba(0,0,0,0.6); transform: translateZ(40px);
+    }
+    .modal h3{ font-family:'Playfair Display', serif; color:var(--accent); margin-bottom:8px }
+    .modal p{ color:var(--muted); margin-bottom:16px }
 
-        /* decorative highlight */
-        .oud .shine {
-            position: absolute;
-            right: 40px;
-            top: 40px;
-            width: 160px;
-            height: 120px;
-            background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 30%);
-            transform: translateZ(40px) rotate(-8deg);
-            border-radius: 50%;
-            mix-blend-mode: overlay;
-        }
+    /* Responsive & small tweaks */
+    @media (max-width: 980px){
+      .nav-links{ display:none } /* hide desktop links */
+      .hamburger{ display:flex }
+      .master-name{ display:none } /* keep header compact */
+      .oud-3d{ display:none } /* hide heavy decoration to save space */
+      .hero{ padding: clamp(20px,5vw,36px) }
+      .navbar{ padding:10px 16px }
+    }
+    @media (max-width:520px){
+      .hero h1{ font-size: clamp(1.25rem, 7.5vw, 1.8rem) }
+      .product-image{ height:140px }
+      .offcanvas{ width:100vw }
+    }
 
-        /* Navbar */
-        .navbar {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid #d4af37;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 5px 30px rgba(212, 175, 55, 0.2);
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #d4af37;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .master-name {
-            display: inline-block;
-            background: linear-gradient(135deg, #d4af37, #f5e6b3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-right: 20px;
-            padding: 5px 15px;
-            border: 2px solid #d4af37;
-            border-radius: 50px;
-            position: relative;
-            animation: elegantMove 4s infinite;
-        }
-
-        @keyframes elegantMove {
-            0% { letter-spacing: 2px; transform: translateX(0); opacity: 0.8; }
-            25% { letter-spacing: 6px; transform: translateX(-10px); opacity: 1; }
-            50% { letter-spacing: 2px; transform: translateX(10px); opacity: 0.8; }
-            75% { letter-spacing: 4px; transform: translateX(-5px); opacity: 1; }
-            100% { letter-spacing: 2px; transform: translateX(0); opacity: 0.8; }
-        }
-
-        .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { text-decoration: none; color: #f5e6b3; font-weight: 600; font-size: 1.05rem; transition: all 0.3s; padding: 5px 0; }
-        .nav-links a:hover { color: #d4af37; }
-
-        /* Layout */
-        .container { max-width: 1400px; margin: 2rem auto; padding: 0 20px; position: relative; z-index: 2; }
-
-        .hero {
-            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-            border: 2px solid #d4af37;
-            border-radius: 30px;
-            padding: 4rem 2rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            color: #f5e6b3;
-            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.2rem; margin-bottom: 1rem; color: #d4af37; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
-        .hero p { font-size: 1.2rem; max-width: 800px; margin: 0 auto; line-height: 1.8; }
-
-        /* Subscriptions section */
-        .subscriptions {
-            margin: 3rem 0 6rem;
-            text-align: center;
-        }
-
-        .section-title { font-family: 'Playfair Display', serif; color: #d4af37; font-size: 2.2rem; margin-bottom: 1.5rem; display: inline-block; }
-
-        .subs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .sub-card {
-            background: linear-gradient(180deg, #252525, #2f2f2f);
-            border: 2px solid #d4af37;
-            border-radius: 20px;
-            padding: 1.6rem;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            transition: transform 0.25s, box-shadow 0.25s;
-        }
-
-        .sub-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(212,175,55,0.18); border-color: #f5e6b3; }
-
-        .sub-name { font-family: 'Playfair Display', serif; color: #d4af37; font-size: 1.3rem; margin-bottom: 0.6rem; }
-        .sub-price { font-size: 2rem; color: #f5e6b3; font-weight: 700; margin-bottom: 0.5rem; }
-        .sub-desc { color: #c0c0c0; font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.6; }
-
-        .subscribe-btn {
-            display: inline-block;
-            padding: 0.9rem 1.2rem;
-            background: transparent;
-            color: #d4af37;
-            border: 2px solid #d4af37;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-
-        .subscribe-btn:hover {
-            background: #d4af37;
-            color: #1a1a1a;
-            box-shadow: 0 6px 18px rgba(212,175,55,0.25);
-        }
-
-        /* Products (kept but without cart actions) */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .product-card {
-            background: #2a2a2a;
-            border: 2px solid #d4af37;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .product-image { height: 180px; background: linear-gradient(135deg, #1a1a1a, #3a3a3a); display:flex; align-items:center; justify-content:center; color:#d4af37; font-size:3rem; border-bottom:1px solid #d4af37; }
-        .product-info { padding: 1.5rem; }
-        .product-title { font-family:'Playfair Display', serif; color:#f5e6b3; font-weight:700; margin-bottom:0.6rem; }
-        .product-description { color:#c0c0c0; font-size:0.95rem; margin-bottom:1rem; }
-        .product-price { color:#d4af37; font-size:1.4rem; font-weight:700; margin-bottom:1rem; }
-
-        /* Footer */
-        footer {
-            margin: 4rem 0;
-            color: #888;
-            text-align: center;
-        }
-
-        /* Responsive tweaks */
-        @media (max-width: 900px) {
-            .oud-3d { display: none; } /* hide decorative oud on small screens for clarity */
-            .hero h1 { font-size: 2rem; }
-        }
-    </style>
+    /* Accessibility / reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important }
+    }
+  </style>
 </head>
 <body>
-    <!-- Decorative oud in background -->
-    <div class="oud-3d" aria-hidden="true">
-        <div class="oud" role="presentation" aria-hidden="true">
-            <div class="body"></div>
-            <div class="soundhole"></div>
-            <div class="neck"><div class="frets"></div></div>
-            <div class="bridge"></div>
-            <div class="shine"></div>
-        </div>
+  <!-- Decorative oud for desktop -->
+  <div class="oud-3d" aria-hidden="true">
+    <div class="oud" role="presentation" aria-hidden="true">
+      <div class="body"></div>
+      <div class="soundhole"></div>
+      <div class="neck"><div class="frets"></div></div>
+      <div class="bridge"></div>
+      <div class="shine"></div>
     </div>
+  </div>
 
-    <header class="navbar" role="banner">
-        <div class="logo">محمد سلهب</div>
-        <div style="display:flex; align-items:center; gap:1rem;">
-            <div class="master-name">الموسيقى العربية الأصيلة</div>
-            <nav class="nav-links" role="navigation" aria-label="روابط رئيسية">
-                <a href="#home">الرئيسية</a>
-                <a href="#products">الأعمال</a>
-                <a href="#subscriptions">الاشتراكات</a>
-                <a href="#contact">اتصل بنا</a>
-            </nav>
+  <header class="navbar" role="banner">
+    <div class="logo">محمد سلهب</div>
+
+    <div class="header-right" role="navigation" aria-label="رئيسي">
+      <div class="master-name">الموسيقى العربية الأصيلة</div>
+
+      <!-- Desktop nav links -->
+      <nav class="nav-links" aria-label="روابط رئيسية">
+        <a href="#home">الرئيسية</a>
+        <a href="#products">الأعمال</a>
+        <a href="#subscriptions">الاشتراكات</a>
+        <a href="#contact">اتصل بنا</a>
+      </nav>
+
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobile-menu">
+        <svg width="22" height="14" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2 2h20M2 8h20M2 14h20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Off-canvas menu (RTL slides from right) -->
+  <aside id="mobile-menu" class="offcanvas" aria-hidden="true">
+    <button class="close-btn" id="close-offcanvas" aria-label="إغلاق القائمة">✕</button>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <div style="font-family:'Playfair Display', serif; font-size:1.1rem; color:var(--accent)">القائمة</div>
+      <div style="color:var(--muted); font-size:0.95rem">تجربة متحركة ثلاثية الأبعاد</div>
+    </div>
+    <nav>
+      <a href="#home" onclick="closeMenu()">الرئيسية</a>
+      <a href="#products" onclick="closeMenu()">الأعمال</a>
+      <a href="#subscriptions" onclick="closeMenu()">الاشتراكات</a>
+      <a href="#contact" onclick="closeMenu()">اتصل بنا</a>
+    </nav>
+
+    <div style="margin-top:auto; border-top:1px dashed rgba(212,175,55,0.06); padding-top:14px; color:var(--muted); font-size:0.95rem">
+      <div>تواصل: info@example.com</div>
+      <div style="margin-top:6px">© 2026 الأستاذ محمد سلهب</div>
+    </div>
+  </aside>
+
+  <main class="container" id="home">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">ألحان وتاريخ</h1>
+      <p>استمع لأعمال الأستاذ محمد سلهب واحصل على اشتراك متميز للوصول الحصري إلى المقاطع والدروس والمواد النادرة.</p>
+    </section>
+
+    <!-- Subscriptions -->
+    <section class="subscriptions" id="subscriptions" aria-labelledby="subs-title">
+      <h2 class="section-title" id="subs-title">اختر اشتراكك</h2>
+      <div class="subs-grid" role="list">
+        <div class="sub-card" role="listitem" aria-label="اشتراك أسبوعي">
+          <div class="sub-name">أسبوعي</div>
+          <div class="sub-price">$4.99</div>
+          <div class="sub-desc">وصول محدود إلى مكتبة المقاطع والدروس الأساسية للأسبوع.</div>
+          <button class="subscribe-btn" data-plan="weekly">اشترك أسبوعي</button>
         </div>
-    </header>
 
-    <main class="container" id="home">
-        <section class="hero" aria-labelledby="hero-title">
-            <h1 id="hero-title">ألحان وتاريخ</h1>
-            <p>استمع لأعمال الأستاذ محمد سلهب واحصل على اشتراك متميز للوصول الحصري إلى المقاطع والدروس والمواد النادرة.</p>
-        </section>
+        <div class="sub-card" role="listitem" aria-label="اشتراك شهري">
+          <div class="sub-name">شهري</div>
+          <div class="sub-price">$12.99</div>
+          <div class="sub-desc">وصول كامل للمحتوى، تحديثات شهرية ومقاطع حصرية.</div>
+          <button class="subscribe-btn" data-plan="monthly">اشترك شهري</button>
+        </div>
 
-        <!-- Subscriptions -->
-        <section class="subscriptions" id="subscriptions" aria-labelledby="subs-title">
-            <h2 class="section-title" id="subs-title">اختر اشتراكك</h2>
-            <div class="subs-grid" role="list">
-                <div class="sub-card" role="listitem" aria-label="اشتراك أسبوعي">
-                    <div class="sub-name">أسبوعي</div>
-                    <div class="sub-price">$4.99</div>
-                    <div class="sub-desc">وصول محدود إلى مكتبة المقاطع والدروس الأساسية للأسبوع.</div>
-                    <button class="subscribe-btn" data-plan="weekly">اشترك أسبوعي</button>
-                </div>
+        <div class="sub-card" role="listitem" aria-label="اشتراك سنوي">
+          <div class="sub-name">سنوي</div>
+          <div class="sub-price">$99.99</div>
+          <div class="sub-desc">أفضل قيمة — وصول كامل + محتوى خاص للأعضاء طوال العام.</div>
+          <button class="subscribe-btn" data-plan="yearly">اشترك سنوي</button>
+        </div>
+      </div>
+    </section>
 
-                <div class="sub-card" role="listitem" aria-label="اشتراك شهري">
-                    <div class="sub-name">شهري</div>
-                    <div class="sub-price">$12.99</div>
-                    <div class="sub-desc">وصول كامل للمحتوى، تحديثات شهرية ومقاطع حصرية.</div>
-                    <button class="subscribe-btn" data-plan="monthly">اشترك شهري</button>
-                </div>
+    <!-- Products / showcase -->
+    <section class="products-section" id="products" aria-labelledby="products-title">
+      <h2 class="section-title" id="products-title">أعمال مختارة</h2>
+      <div class="products-grid" role="list">
+        <article class="product-card" role="listitem" aria-label="عمل 1">
+          <div class="product-image">🎵</div>
+          <div class="product-info">
+            <div class="product-title">مقاطع نادرة ١</div>
+            <div class="product-description">مجموعة من المقاطع المختارة من أرشيف الأستاذ محمد.</div>
+            <div class="product-price">$7.99</div>
+          </div>
+        </article>
 
-                <div class="sub-card" role="listitem" aria-label="اشتراك سنوي">
-                    <div class="sub-name">سنوي</div>
-                    <div class="sub-price">$99.99</div>
-                    <div class="sub-desc">أفضل قيمة — وصول كامل + محتوى خاص للأعضاء طوال العام.</div>
-                    <button class="subscribe-btn" data-plan="yearly">اشترك سنوي</button>
-                </div>
-            </div>
-        </section>
+        <article class="product-card" role="listitem" aria-label="عمل 2">
+          <div class="product-image">🎶</div>
+          <div class="product-info">
+            <div class="product-title">درس عن تقنية العزف</div>
+            <div class="product-description">درس تفصيلي حول تقنيات العزف بالعود من الألف إلى الياء.</div>
+            <div class="product-price">$14.99</div>
+          </div>
+        </article>
 
-        <!-- Products / works (kept as showcase, بدون سلة) -->
-        <section class="products-section" id="products" aria-labelledby="products-title">
-            <h2 class="section-title" id="products-title">أعمال مختارة</h2>
-            <div class="products-grid" role="list">
-                <article class="product-card" role="listitem" aria-label="عمل 1">
-                    <div class="product-image">🎵</div>
-                    <div class="product-info">
-                        <div class="product-title">مقاطع نادرة ١</div>
-                        <div class="product-description">مجموعة من المقاطع المختارة من أرشيف الأستاذ محمد.</div>
-                        <div class="product-price">$7.99</div>
-                    </div>
-                </article>
+        <article class="product-card" role="listitem" aria-label="عمل 3">
+          <div class="product-image">🎼</div>
+          <div class="product-info">
+            <div class="product-title">أرشيف تسجيلات حية</div>
+            <div class="product-description">تسجيلات حية نادرة تظهر القوة الفنية والتعبيرية.</div>
+            <div class="product-price">$19.99</div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-                <article class="product-card" role="listitem" aria-label="عمل 2">
-                    <div class="product-image">🎶</div>
-                    <div class="product-info">
-                        <div class="product-title">درس عن تقنية العزف</div>
-                        <div class="product-description">درس تفصيلي حول تقنيات العزف بالعود من الألف إلى الياء.</div>
-                        <div class="product-price">$14.99</div>
-                    </div>
-                </article>
+    <section id="contact" style="margin-top:3rem;">
+      <div class="custom-request">
+        <h2>تواصل معنا</h2>
+        <p style="color:var(--accent-soft); text-align:center;">للطلبات الخاصة أو التعاونات المهنية، راسلنا عبر البريد أو الهاتف.</p>
+      </div>
+    </section>
+  </main>
 
-                <article class="product-card" role="listitem" aria-label="عمل 3">
-                    <div class="product-image">🎼</div>
-                    <div class="product-info">
-                        <div class="product-title">أرشيف تسجيلات حية</div>
-                        <div class="product-description">تسجيلات حية نادرة تظهر القوة الفنية والتعبيرية.</div>
-                        <div class="product-price">$19.99</div>
-                    </div>
-                </article>
-            </div>
-        </section>
+  <footer>
+    © 2026 الأستاذ محمد سلهب — كل الحقوق محفوظة
+  </footer>
 
-        <section id="contact" style="margin-top:3rem;">
-            <div class="custom-request">
-                <h2>تواصل معنا</h2>
-                <p style="color:#f5e6b3; text-align:center;">للطلبات الخاصة أو التعاونات المهنية، راسلنا عبر البريد أو الهاتف.</p>
-            </div>
-        </section>
-    </main>
+  <!-- Modal for subscribe -->
+  <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal" role="document" aria-labelledby="modal-title">
+      <h3 id="modal-title">تأكيد الاشتراك</h3>
+      <p id="modal-desc">جارٍ توجيهك إلى صفحة الدفع. (هذا نموذج — استبدل بربط بوابة الدفع)</p>
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button id="modal-close" style="padding:8px 12px; border-radius:8px; background:transparent; border:1px solid rgba(212,175,55,0.08); color:var(--accent-soft); cursor:pointer">إلغاء</button>
+        <button id="modal-confirm" style="padding:8px 12px; border-radius:8px; background:var(--accent); border:none; color:#111; font-weight:700; cursor:pointer">متابعة للدفع</button>
+      </div>
+    </div>
+  </div>
 
-    <footer>
-        © 2026 الأستاذ محمد سلهب — كل الحقوق محفوظة
-    </footer>
+  <script>
+    // Off-canvas menu toggle (3D slide)
+    const hamburger = document.getElementById('hamburger');
+    const offcanvas = document.getElementById('mobile-menu');
+    const closeCanvas = document.getElementById('close-offcanvas');
 
-    <script>
-        // Simple subscription button handling — استبدل بتنفيذ الدفع أو تسجيل المستخدم لاحقاً
-        document.querySelectorAll('.subscribe-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const plan = e.currentTarget.dataset.plan;
-                let name = plan === 'weekly' ? 'أسبوعي' : plan === 'monthly' ? 'شهري' : 'سنوي';
-                // هنا يمكن استبدال alert بفتح مودال الدفع أو تمرير إلى صفحة التسجيل
-                alert('شكراً لاختيارك الاشتراك ' + name + '، سيتم توجيهك لصفحة الدفع لاحقاً.');
-            });
-        });
-    </script>
+    function openMenu() {
+      offcanvas.classList.add('open');
+      offcanvas.setAttribute('aria-hidden','false');
+      hamburger.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu(){
+      offcanvas.classList.remove('open');
+      offcanvas.setAttribute('aria-hidden','true');
+      hamburger.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', openMenu);
+    closeCanvas.addEventListener('click', closeMenu);
+    window.closeMenu = closeMenu; // for inline onclick links
+
+    // Modal handling for subscribe buttons
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalClose = document.getElementById('modal-close');
+    const modalConfirm = document.getElementById('modal-confirm');
+
+    document.querySelectorAll('.subscribe-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const plan = e.currentTarget.dataset.plan || 'اشتراك';
+        document.getElementById('modal-title').textContent = 'تأكيد ' + (plan === 'weekly' ? 'اشتراك أسبوعي' : plan === 'monthly' ? 'اشتراك شهري' : 'اشتراك سنوي');
+        document.getElementById('modal-desc').textContent = 'شكراً لاختيارك ' + (plan === 'weekly' ? 'الاشتراك الأسبوعي.' : plan === 'monthly' ? 'الاشتراك الشهري.' : 'الاشتراك السنوي.') + ' سيتم توجيهك لصفحة الدفع.';
+        modalBackdrop.classList.add('open');
+        modalBackdrop.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      })
+    });
+    modalClose.addEventListener('click', ()=>{ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='';});
+    modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop){ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
+    modalConfirm.addEventListener('click', ()=>{
+      // TODO: redirect to actual payment flow
+      alert('سيتم توجيهك لبوابة الدفع (استبدل alert بعملية الدفع الحقيقية).');
+      modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='';
+    });
+
+    // Oud parallax tilt (desktop only)
+    const oud = document.querySelector('.oud-3d');
+    if(oud && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+      window.addEventListener('pointermove', (ev)=>{
+        const w = window.innerWidth, h = window.innerHeight;
+        const cx = w/2, cy = h/2;
+        const dx = (ev.clientX - cx)/cx; // -1 .. 1
+        const dy = (ev.clientY - cy)/cy;
+        const rx = dy * 6; // rotateX
+        const ry = -dx * 6; // rotateY
+        oud.style.transform = `translateY(-50%) rotateY(${ry}deg) rotateX(${rx}deg) rotate(-10deg)`;
+      });
+      window.addEventListener('pointerleave', ()=>{ oud.style.transform = 'translateY(-50%) rotateY(-16deg) rotate(-10deg)'; })
+    }
+
+    // Close menu with escape
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        closeMenu();
+        modalBackdrop.classList.remove('open');
+        modalBackdrop.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+      }
+    });
+  </script>
 </body>
 </html>
