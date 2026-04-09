@@ -1,443 +1,314 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>الأستاذ محمد سلهب - الموسيقى العربية الأصيلة</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* ========== Variables & Reset ========== */
-    :root{
-      --bg-1:#0a0a0a;
-      --panel:#1a1a1a;
-      --accent:#d4af37;
-      --accent-soft:#f5e6b3;
-      --muted:#c0c0c0;
-      --glass: rgba(26,26,26,0.72);
-      --radius:20px;
-      --container-padding:clamp(12px, 3vw, 32px);
-      --transition: 300ms cubic-bezier(.2,.9,.3,1);
-      --max-width:1400px;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family: 'Cairo', sans-serif;
-      background: var(--bg-1);
-      color: var(--accent);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      min-height:100vh;
-      overflow-x:hidden;
-      line-height:1.6;
-    }
-
-    /* background + large faint notes */
-    body::before{
-      content:'';
-      position:fixed;inset:0;
-      background:linear-gradient(135deg,#1a1a1a 0%, #262626 50%, #111 100%);
-      z-index:-4;
-    }
-    body::after{
-      content:'♫ ♪ ♫';
-      position:fixed;
-      top:50%;left:50%;
-      transform:translate(-50%,-50%);
-      font-size: clamp(8rem, 18vw, 18rem);
-      color: rgba(212,175,55,0.02);
-      z-index:-3;
-      font-family:'Playfair Display', serif;
-      pointer-events:none;
-      white-space:nowrap;
-    }
-
-    /* ========== Decorative Oud (responsive + subtle parallax) ========== */
-    .oud-3d{
-      position:fixed;
-      inset:auto 4% auto auto; /* top/right/bottom/left */
-      top:50%;
-      transform:translateY(-50%) rotateY(-16deg) rotate(-10deg);
-      width:min(44vw,520px);
-      height:auto;
-      pointer-events:none;
-      z-index:-2;
-      opacity:0.12;
-      filter:drop-shadow(0 30px 40px rgba(0,0,0,0.6));
-      transform-style:preserve-3d;
-      transition: transform calc(var(--transition));
-    }
-    .oud{ width:80%; margin-inline-start:auto; aspect-ratio:1/1; position:relative; }
-    .oud .body{
-      position:absolute; right:0; top:10%;
-      width:72%; height:78%;
-      background: radial-gradient(120px 100px at 30% 30%, #f0c27b, #c78b42 40%, #8b4a1a 100%);
-      border-radius: 60% 40% 55% 45% / 60% 60% 40% 40%;
-      transform: rotateX(12deg) rotateY(-8deg);
-      box-shadow: inset -20px 30px 40px rgba(0,0,0,0.45), 0 20px 60px rgba(0,0,0,0.6);
-      border:2px solid rgba(0,0,0,0.08);
-    }
-    .oud .soundhole{ position:absolute; right:28%; top:46%; width:18%; aspect-ratio:1/1; border-radius:50%;
-      background: radial-gradient(circle at 35% 35%, #1a1a1a 0%, #2a2a2a 40%, rgba(0,0,0,0.6) 100%);
-      transform:translateZ(30px); border:6px solid rgba(0,0,0,0.25); box-shadow: inset 0 6px 12px rgba(255,255,255,0.02);
-    }
-    .oud .neck{ position:absolute; right:80%; top:8%; width:23%; height:45%; background:linear-gradient(180deg,#3a2b1a,#2a1a0f); border-radius:12px; transform-origin:right center; transform: rotate(-18deg) translateZ(20px); box-shadow:inset 0 -8px 18px rgba(0,0,0,0.5); }
-    .oud .frets{ position:absolute; left:12px; top:20px; bottom:20px; width:4px; background:linear-gradient(#b9894a,#7a4f28); border-radius:2px; opacity:0.95; }
-    .oud .bridge{ position:absolute; right:42%; top:86%; width:8%; height:2.6%; background:linear-gradient(90deg,#2b1a12,#1a0f08); border-radius:6px; transform:translateZ(18px)}
-    .oud .shine{ position:absolute; right:18%; top:6%; width:36%; height:24%; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 30%); transform:translateZ(40px) rotate(-8deg); border-radius:50%; mix-blend-mode:overlay; }
-
-    /* ========== Navbar (sticky + 3D creative menu) ========== */
-    .navbar{
-      position:sticky; top:0; z-index:1000;
-      display:flex; align-items:center; justify-content:space-between;
-      padding: clamp(10px, 2vw, 18px) var(--container-padding);
-      background: linear-gradient(180deg, rgba(26,26,26,0.92), rgba(20,20,20,0.6));
-      border-bottom:2px solid var(--accent);
-      box-shadow: 0 8px 30px rgba(212,175,55,0.12);
-      backdrop-filter: blur(6px);
-      isolation:isolate;
-    }
-    .logo{ font-family:'Playfair Display', serif; font-size: clamp(1.25rem, 2.4vw, 2.2rem); color:var(--accent); font-weight:700; text-shadow:2px 2px 6px rgba(0,0,0,0.5)}
-    .header-right{display:flex; align-items:center; gap:0.75rem}
-    .master-name{
-      font-family:'Playfair Display', serif;
-      font-size: clamp(0.9rem, 1.6vw, 1.25rem);
-      font-weight:700;
-      background:linear-gradient(135deg,var(--accent),var(--accent-soft));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      padding:6px 14px; border-radius:999px; border:2px solid var(--accent);
-      box-shadow: 0 6px 18px rgba(212,175,55,0.06);
-      transform-style:preserve-3d;
-    }
-    .nav-links{
-      display:flex; gap:clamp(10px,2vw,28px); align-items:center;
-    }
-    .nav-links a{
-      text-decoration:none; color:var(--accent-soft); font-weight:600; font-size:clamp(0.95rem,1.4vw,1.05rem);
-      padding:6px 6px; position:relative; transition:transform var(--transition), color var(--transition);
-      transform-style:preserve-3d;
-    }
-    .nav-links a::after{
-      content:''; position:absolute; inset:auto 0 0 0; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent-soft)); transform-origin:left; transform:scaleX(0); transition:transform 220ms;
-    }
-    .nav-links a:hover{ color:var(--accent); transform: translateZ(12px) translateY(-3px); text-shadow:0 6px 20px rgba(0,0,0,0.6)}
-    .nav-links a:hover::after{ transform:scaleX(1) }
-
-    /* Hamburger for small screens */
-    .hamburger{
-      display:none;
-      width:44px;height:44px;border-radius:10px;border:2px solid rgba(212,175,55,0.12);
-      background:transparent;color:var(--accent);align-items:center;justify-content:center;
-      cursor:pointer; transition:all var(--transition);
-    }
-    .hamburger:focus{outline:3px solid rgba(212,175,55,0.12)}
-
-    /* Off-canvas 3D menu (RTL -> slides from right) */
-    .offcanvas{
-      position:fixed; top:0; right:0; height:100vh; width:min(84vw,420px);
-      background: linear-gradient(180deg,#111,#1e1e1e); box-shadow:-40px 0 80px rgba(0,0,0,0.6);
-      transform: translateX(110%) perspective(1400px) rotateY(-18deg);
-      transition: transform var(--transition);
-      z-index:1500; padding:30px 20px; display:flex; flex-direction:column; gap:20px;
-      border-left:1px solid rgba(212,175,55,0.06);
-      backdrop-filter: blur(6px);
-    }
-    .offcanvas.open{ transform: translateX(0) perspective(1400px) rotateY(0deg) }
-    .offcanvas .close-btn{ align-self:flex-start; background:transparent;border:0;color:var(--accent); font-size:1.1rem; cursor:pointer }
-    .offcanvas nav{ display:flex; flex-direction:column; gap:10px; margin-top:10px }
-    .offcanvas nav a{ padding:12px 14px; border-radius:10px; color:var(--accent-soft); text-decoration:none; display:block; font-weight:600; transition: background var(--transition), transform var(--transition); }
-    .offcanvas nav a:hover{ background: linear-gradient(90deg, rgba(212,175,55,0.06), rgba(212,175,55,0.02)); transform: translateZ(8px); color:var(--accent) }
-
-    /* Container + hero */
-    .container{ max-width:var(--max-width); margin:2rem auto; padding:0 var(--container-padding); position:relative; z-index:2; }
-    .hero{
-      background: linear-gradient(135deg,#2a2a2a,#141414);
-      border:2px solid var(--accent); border-radius:22px; padding: clamp(28px,6vw,64px);
-      text-align:center; color:var(--accent-soft); box-shadow:0 20px 50px rgba(212,175,55,0.14);
-    }
-    .hero h1{ font-family:'Playfair Display', serif; font-size: clamp(1.6rem, 5vw, 3.2rem); margin-bottom:0.8rem; color:var(--accent); text-shadow:0 0 20px rgba(212,175,55,0.35) }
-    .hero p{ font-size: clamp(0.95rem, 2.2vw, 1.2rem); max-width:900px; margin:0 auto; color:var(--muted); line-height:1.85 }
-
-    /* Subscriptions */
-    .subscriptions{ margin:3rem 0 6rem; text-align:center }
-    .section-title{ font-family:'Playfair Display', serif; color:var(--accent); font-size: clamp(1.25rem,2.6vw,2.2rem); margin-bottom:1.25rem; display:inline-block }
-    .subs-grid{ display:grid; gap:1rem; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); margin-top:1.5rem; align-items:start }
-    .sub-card{
-      background: linear-gradient(180deg,#252525,#2f2f2f);
-      border:2px solid var(--accent); border-radius:16px; padding:1.4rem; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-      transform-style:preserve-3d; will-change:transform;
-    }
-    .sub-card:hover{ transform: translateY(-10px) rotateX(4deg) translateZ(6px); box-shadow: 0 30px 60px rgba(212,175,55,0.14); border-color:var(--accent-soft) }
-    .sub-name{ font-family:'Playfair Display', serif; color:var(--accent); font-size:1.15rem; margin-bottom:0.6rem }
-    .sub-price{ font-size: clamp(1.2rem,2.4vw,2rem); color:var(--accent-soft); font-weight:700; margin-bottom:0.5rem }
-    .sub-desc{ color:var(--muted); font-size:0.95rem; margin-bottom:1rem; line-height:1.6 }
-    .subscribe-btn{
-      display:inline-block; padding:10px 14px; background:transparent; color:var(--accent); border:2px solid var(--accent); border-radius:12px; font-weight:700; cursor:pointer; transition: all var(--transition);
-    }
-    .subscribe-btn:hover{ background:var(--accent); color:#111; box-shadow: 0 10px 26px rgba(212,175,55,0.18) }
-
-    /* Products */
-    .products-grid{ display:grid; gap:1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); margin-top:1rem }
-    .product-card{ background:#222; border:2px solid var(--accent); border-radius:18px; overflow:hidden; transition: transform var(--transition), box-shadow var(--transition); transform-style:preserve-3d; perspective:1200px; }
-    .product-card:hover{ transform: translateY(-12px) rotateX(6deg) translateZ(8px); box-shadow: 0 30px 80px rgba(0,0,0,0.6) }
-    .product-image{ height:180px; background:linear-gradient(135deg,#151515,#3a3a3a); display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:3rem; border-bottom:1px solid rgba(212,175,55,0.06) }
-    .product-info{ padding:1.25rem }
-    .product-title{ font-family:'Playfair Display', serif; color:var(--accent-soft); font-weight:700; margin-bottom:0.5rem }
-    .product-description{ color:var(--muted); font-size:0.95rem; margin-bottom:0.9rem }
-    .product-price{ color:var(--accent); font-size:1.15rem; font-weight:700 }
-
-    /* Contact + footer */
-    footer{ margin:3.5rem 0; color:#888; text-align:center }
-
-    /* Modal (nice small overlay for subscribe) */
-    .modal-backdrop{
-      position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
-      z-index:1600; opacity:0; pointer-events:none; transition:opacity var(--transition);
-    }
-    .modal-backdrop.open{ opacity:1; pointer-events:auto }
-    .modal{
-      width:min(520px,94vw); background:linear-gradient(180deg,#111,#1b1b1b); border:2px solid rgba(212,175,55,0.08); padding:22px; border-radius:14px; color:var(--accent-soft); box-shadow: 0 30px 90px rgba(0,0,0,0.6); transform: translateZ(40px);
-    }
-    .modal h3{ font-family:'Playfair Display', serif; color:var(--accent); margin-bottom:8px }
-    .modal p{ color:var(--muted); margin-bottom:16px }
-
-    /* Responsive & small tweaks */
-    @media (max-width: 980px){
-      .nav-links{ display:none } /* hide desktop links */
-      .hamburger{ display:flex }
-      .master-name{ display:none } /* keep header compact */
-      .oud-3d{ display:none } /* hide heavy decoration to save space */
-      .hero{ padding: clamp(20px,5vw,36px) }
-      .navbar{ padding:10px 16px }
-    }
-    @media (max-width:520px){
-      .hero h1{ font-size: clamp(1.25rem, 7.5vw, 1.8rem) }
-      .product-image{ height:140px }
-      .offcanvas{ width:100vw }
-    }
-
-    /* Accessibility / reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; animation:none !important }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأستاذ محمد سلهب - الموسيقى العربية الأصيلة</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #0a0a0a;
+            color: #d4af37;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+            z-index: -2;
+        }
+        body::after {
+            content: '♫ ♪ ♫';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20rem;
+            color: rgba(212, 175, 55, 0.03);
+            white-space: nowrap;
+            z-index: -1;
+            pointer-events: none;
+            font-family: 'Playfair Display', serif;
+        }
+        .navbar {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #d4af37;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #d4af37; }
+        .master-name {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37, #f5e6b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-right: 20px;
+            padding: 5px 15px;
+            border: 2px solid #d4af37;
+            border-radius: 50px;
+            animation: elegantMove 4s infinite;
+        }
+        @keyframes elegantMove {
+            0% { letter-spacing: 2px; transform: translateX(0); opacity: 0.8; }
+            25% { letter-spacing: 6px; transform: translateX(-10px); opacity: 1; }
+            50% { letter-spacing: 2px; transform: translateX(10px); opacity: 0.8; }
+            75% { letter-spacing: 4px; transform: translateX(-5px); opacity: 1; }
+            100% { letter-spacing: 2px; transform: translateX(0); opacity: 0.8; }
+        }
+        .master-name::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #d4af37, transparent, #d4af37);
+            border-radius: 50px;
+            z-index: -1;
+            animation: borderGlow 3s infinite;
+        }
+        @keyframes borderGlow { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: #f5e6b3; font-weight: 600; font-size: 1.1rem; transition: all 0.3s; position: relative; padding: 5px 0; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #d4af37; transition: width 0.3s; }
+        .nav-links a:hover { color: #d4af37; }
+        .nav-links a:hover::after { width: 100%; }
+        .cart-icon { position: relative; cursor: pointer; color: #d4af37; font-size: 1.3rem; }
+        .cart-count { position: absolute; top: -8px; right: -8px; background: #8b0000; color: #f5e6b3; border-radius: 50%; padding: 2px 6px; font-size: 12px; border: 1px solid #d4af37; }
+        .container { max-width: 1400px; margin: 2rem auto; padding: 0 20px; }
+        .hero {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border: 2px solid #d4af37;
+            border-radius: 30px;
+            padding: 5rem 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #f5e6b3;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; color: #d4af37; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); position: relative; }
+        .hero p { font-size: 1.3rem; max-width: 700px; margin: 0 auto; line-height: 1.8; position: relative; }
+        .products-section { margin-bottom: 4rem; }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+        }
+        .section-title::before, .section-title::after { content: '✦'; color: #d4af37; font-size: 2rem; margin: 0 20px; opacity: 0.5; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem; }
+        .product-card { background: #2a2a2a; border: 2px solid #d4af37; border-radius: 20px; overflow: hidden; transition: all 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4); border-color: #f5e6b3; }
+        .product-image { height: 200px; background: linear-gradient(135deg, #1a1a1a, #3a3a3a); display: flex; align-items: center; justify-content: center; color: #d4af37; font-size: 4rem; border-bottom: 1px solid #d4af37; }
+        .product-info { padding: 2rem; }
+        .product-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; color: #f5e6b3; }
+        .product-description { color: #c0c0c0; font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.6; }
+        .product-price { font-size: 1.8rem; font-weight: 700; color: #d4af37; margin-bottom: 1rem; }
+        .product-type { display: inline-block; padding: 0.4rem 1.2rem; background: #3a3a3a; border: 1px solid #d4af37; border-radius: 30px; font-size: 0.85rem; color: #f5e6b3; margin-bottom: 1rem; }
+        .add-to-cart { width: 100%; padding: 1rem; background: transparent; color: #d4af37; border: 2px solid #d4af37; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .add-to-cart:hover { background: #d4af37; color: #1a1a1a; }
+        .cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .cart-modal.active { display: flex; }
+        .cart-content { background: #2a2a2a; border: 3px solid #d4af37; border-radius: 30px; padding: 2rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 30px 60px rgba(212, 175, 55, 0.5); }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #d4af37; }
+        .cart-header h3 { font-size: 1.8rem; color: #d4af37; }
+        .close-cart { background: none; border: none; color: #d4af37; font-size: 2rem; cursor: pointer; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #3a3a3a; border-radius: 15px; margin-bottom: 1rem; border: 1px solid #d4af37; }
+        .cart-item-title { color: #f5e6b3; font-weight: 600; }
+        .cart-item-price { color: #d4af37; font-size: 1.1rem; }
+        .remove-item { background: none; border: none; color: #8b0000; font-size: 1.3rem; cursor: pointer; }
+        .cart-total { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #1a1a1a; border-radius: 15px; margin-bottom: 2rem; border: 2px solid #d4af37; }
+        .cart-total .total-price { color: #d4af37; font-size: 1.8rem; font-weight: 700; }
+        .cart-actions { display: flex; gap: 1rem; }
+        .checkout-btn { flex: 2; padding: 1rem; background: linear-gradient(135deg, #d4af37, #f5e6b3); color: #1a1a1a; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; border: 2px solid #d4af37; }
+        .checkout-btn:hover { background: transparent; color: #d4af37; }
+        .continue-btn { flex: 1; padding: 1rem; background: transparent; color: #d4af37; border: 2px solid #d4af37; border-radius: 15px; font-weight: 700; cursor: pointer; }
+        .continue-btn:hover { background: #d4af37; color: #1a1a1a; }
+        .empty-cart { text-align: center; padding: 3rem; color: #888; font-size: 1.2rem; }
+        .custom-request { background: #2a2a2a; border: 3px solid #d4af37; border-radius: 40px; padding: 3rem; margin: 4rem 0; position: relative; overflow: hidden; }
+        .custom-request h2 { text-align: center; margin-bottom: 2rem; color: #d4af37; font-size: 2.5rem; }
+        .request-form { max-width: 700px; margin: 0 auto; }
+        .form-group { margin-bottom: 2rem; }
+        .form-group label { display: block; margin-bottom: 0.8rem; color: #f5e6b3; font-weight: 600; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 1rem; background: #3a3a3a; border: 2px solid #d4af37; border-radius: 15px; color: #f5e6b3; font-family: 'Cairo', sans-serif; }
+        .submit-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #d4af37, #f5e6b3); color: #1a1a1a; border: none; border-radius: 15px; font-weight: 700; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .submit-btn:hover { background: transparent; color: #d4af37; border: 2px solid #d4af37; }
+        .contact-info { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border: 3px solid #d4af37; border-radius: 50px; padding: 3rem; margin: 4rem 0; text-align: center; }
+        .contact-details { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin: 2rem 0; }
+        .contact-item { flex: 1; min-width: 250px; padding: 1.5rem; background: #3a3a3a; border: 1px solid #d4af37; border-radius: 20px; transition: 0.3s; }
+        .contact-item:hover { transform: scale(1.05); }
+        .contact-item i { font-size: 2rem; color: #d4af37; margin-bottom: 1rem; }
+        .contact-item a { color: #f5e6b3; text-decoration: none; font-size: 1.2rem; display: block; }
+        .private-note { margin-top: 2rem; padding: 1rem; background: rgba(212, 175, 55, 0.1); border-radius: 30px; border: 1px dashed #d4af37; }
+        footer { background: #1a1a1a; border-top: 2px solid #d4af37; padding: 3rem 5%; margin-top: 4rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .footer-links a { color: #f5e6b3; text-decoration: none; }
+        .footer-links a:hover { color: #d4af37; }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 1rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .section-title::before, .section-title::after { display: none; }
+            .cart-actions { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
-  <!-- Decorative oud for desktop -->
-  <div class="oud-3d" aria-hidden="true">
-    <div class="oud" role="presentation" aria-hidden="true">
-      <div class="body"></div>
-      <div class="soundhole"></div>
-      <div class="neck"><div class="frets"></div></div>
-      <div class="bridge"></div>
-      <div class="shine"></div>
-    </div>
-  </div>
-
-  <header class="navbar" role="banner">
-    <div class="logo">محمد سلهب</div>
-
-    <div class="header-right" role="navigation" aria-label="رئيسي">
-      <div class="master-name">الموسيقى العربية الأصيلة</div>
-
-      <!-- Desktop nav links -->
-      <nav class="nav-links" aria-label="روابط رئيسية">
-        <a href="#home">الرئيسية</a>
-        <a href="#products">الأعمال</a>
-        <a href="#subscriptions">الاشتراكات</a>
-        <a href="#contact">اتصل بنا</a>
-      </nav>
-
-      <!-- Hamburger (mobile) -->
-      <button class="hamburger" id="hamburger" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobile-menu">
-        <svg width="22" height="14" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M2 2h20M2 8h20M2 14h20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- Off-canvas menu (RTL slides from right) -->
-  <aside id="mobile-menu" class="offcanvas" aria-hidden="true">
-    <button class="close-btn" id="close-offcanvas" aria-label="إغلاق القائمة">✕</button>
-    <div style="display:flex; gap:12px; align-items:center;">
-      <div style="font-family:'Playfair Display', serif; font-size:1.1rem; color:var(--accent)">القائمة</div>
-      <div style="color:var(--muted); font-size:0.95rem">تجربة متحركة ثلاثية الأبعاد</div>
-    </div>
-    <nav>
-      <a href="#home" onclick="closeMenu()">الرئيسية</a>
-      <a href="#products" onclick="closeMenu()">الأعمال</a>
-      <a href="#subscriptions" onclick="closeMenu()">الاشتراكات</a>
-      <a href="#contact" onclick="closeMenu()">اتصل بنا</a>
+    <nav class="navbar">
+        <div class="logo"><span class="master-name">الأستاذ محمد سلهب</span></div>
+        <div class="nav-links">
+            <a href="#home">الرئيسية</a>
+            <a href="#products">النوت الموسيقية</a>
+            <a href="#videos">الفيديوهات</a>
+            <a href="#custom">طلب خاص</a>
+            <a href="#contact">اتصل بنا</a>
+            <div class="cart-icon" onclick="openCart()"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCountDisplay">0</span></div>
+        </div>
     </nav>
 
-    <div style="margin-top:auto; border-top:1px dashed rgba(212,175,55,0.06); padding-top:14px; color:var(--muted); font-size:0.95rem">
-      <div>تواصل: info@example.com</div>
-      <div style="margin-top:6px">© 2026 الأستاذ محمد سلهب</div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header"><h3>🛒 سلة المشتريات</h3><button class="close-cart" onclick="closeCart()">&times;</button></div>
+            <div class="cart-items" id="cartItems"><div class="empty-cart">🛒 سلة المشتريات فارغة</div></div>
+            <div class="cart-total"><span>المجموع الكلي:</span><span class="total-price" id="cartTotal">$0</span></div>
+            <div class="cart-actions">
+                <button class="continue-btn" onclick="closeCart()">مواصلة التسوق</button>
+                <button class="checkout-btn" onclick="checkout()"><i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب</button>
+            </div>
+        </div>
     </div>
-  </aside>
 
-  <main class="container" id="home">
-    <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">ألحان وتاريخ</h1>
-      <p>استمع لأعمال الأستاذ محمد سلهب واحصل على اشتراك متميز للوصول الحصري إلى المقاطع والدروس والمواد النادرة.</p>
-    </section>
+    <div class="container">
+        <section class="hero" id="home">
+            <h1>الموسيقى العربية الأصيلة</h1>
+            <p>مع الأستاذ محمد سلهب، رحلة في عالم الموسيقى الشرقية العريقة. نوتات نادرة، فيديوهات حصرية، وتعليم راقٍ بلمسات فنية أصيلة.</p>
+            <div style="font-size: 4rem; margin-top: 2rem;"><i class="fas fa-music"></i> 🎵 🎼</div>
+        </section>
 
-    <!-- Subscriptions -->
-    <section class="subscriptions" id="subscriptions" aria-labelledby="subs-title">
-      <h2 class="section-title" id="subs-title">اختر اشتراكك</h2>
-      <div class="subs-grid" role="list">
-        <div class="sub-card" role="listitem" aria-label="اشتراك أسبوعي">
-          <div class="sub-name">أسبوعي</div>
-          <div class="sub-price">$4.99</div>
-          <div class="sub-desc">وصول محدود إلى مكتبة المقاطع والدروس الأساسية للأسبوع.</div>
-          <button class="subscribe-btn" data-plan="weekly">اشترك أسبوعي</button>
-        </div>
+        <section class="products-section" id="products">
+            <h2 class="section-title">النوت الموسيقية النادرة</h2>
+            <div class="products-grid" id="sheetMusicProducts"></div>
+        </section>
 
-        <div class="sub-card" role="listitem" aria-label="اشتراك شهري">
-          <div class="sub-name">شهري</div>
-          <div class="sub-price">$12.99</div>
-          <div class="sub-desc">وصول كامل للمحتوى، تحديثات شهرية ومقاطع حصرية.</div>
-          <button class="subscribe-btn" data-plan="monthly">اشترك شهري</button>
-        </div>
+        <section class="products-section" id="videos">
+            <h2 class="section-title">الدروس والفيديوهات الحصرية</h2>
+            <div class="products-grid" id="videoProducts"></div>
+        </section>
 
-        <div class="sub-card" role="listitem" aria-label="اشتراك سنوي">
-          <div class="sub-name">سنوي</div>
-          <div class="sub-price">$99.99</div>
-          <div class="sub-desc">أفضل قيمة — وصول كامل + محتوى خاص للأعضاء طوال العام.</div>
-          <button class="subscribe-btn" data-plan="yearly">اشترك سنوي</button>
-        </div>
-      </div>
-    </section>
+        <section class="custom-request" id="custom">
+            <h2>طلب تعليمي خاص</h2>
+            <form class="request-form" id="requestForm" onsubmit="return submitCustomRequest(event)">
+                <div class="form-group"><label>👤 الاسم الكامل</label><input type="text" id="fullName" placeholder="أدخل اسمك الكريم" required></div>
+                <div class="form-group"><label>📱 رقم الواتساب</label><input type="tel" id="whatsapp" placeholder="أدخل رقم واتساب للتواصل" required></div>
+                <div class="form-group"><label>🎯 الموضوع المطلوب</label><textarea id="topic" placeholder="أدخل التفاصيل الدقيقة..." required></textarea></div>
+                <div class="form-group"><label>📊 مستواك الحالي</label><select id="level"><option>🌱 مبتدئ</option><option>📈 متوسط</option><option>👑 متقدم</option></select></div>
+                <div class="form-group"><label>💰 السعر المناسب ($)</label><input type="number" id="price" min="20" step="5" value="20" required></div>
+                <button type="submit" class="submit-btn"><i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب</button>
+            </form>
+        </section>
 
-    <!-- Products / showcase -->
-    <section class="products-section" id="products" aria-labelledby="products-title">
-      <h2 class="section-title" id="products-title">أعمال مختارة</h2>
-      <div class="products-grid" role="list">
-        <article class="product-card" role="listitem" aria-label="عمل 1">
-          <div class="product-image">🎵</div>
-          <div class="product-info">
-            <div class="product-title">مقاطع نادرة ١</div>
-            <div class="product-description">مجموعة من المقاطع المختارة من أرشيف الأستاذ محمد.</div>
-            <div class="product-price">$7.99</div>
-          </div>
-        </article>
-
-        <article class="product-card" role="listitem" aria-label="عمل 2">
-          <div class="product-image">🎶</div>
-          <div class="product-info">
-            <div class="product-title">درس عن تقنية العزف</div>
-            <div class="product-description">درس تفصيلي حول تقنيات العزف بالعود من الألف إلى الياء.</div>
-            <div class="product-price">$14.99</div>
-          </div>
-        </article>
-
-        <article class="product-card" role="listitem" aria-label="عمل 3">
-          <div class="product-image">🎼</div>
-          <div class="product-info">
-            <div class="product-title">أرشيف تسجيلات حية</div>
-            <div class="product-description">تسجيلات حية نادرة تظهر القوة الفنية والتعبيرية.</div>
-            <div class="product-price">$19.99</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="contact" style="margin-top:3rem;">
-      <div class="custom-request">
-        <h2>تواصل معنا</h2>
-        <p style="color:var(--accent-soft); text-align:center;">للطلبات الخاصة أو التعاونات المهنية، راسلنا عبر البريد أو الهاتف.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    © 2026 الأستاذ محمد سلهب — كل الحقوق محفوظة
-  </footer>
-
-  <!-- Modal for subscribe -->
-  <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal" role="document" aria-labelledby="modal-title">
-      <h3 id="modal-title">تأكيد الاشتراك</h3>
-      <p id="modal-desc">جارٍ توجيهك إلى صفحة الدفع. (هذا نموذج — استبدل بربط بوابة الدفع)</p>
-      <div style="display:flex; gap:10px; justify-content:flex-end;">
-        <button id="modal-close" style="padding:8px 12px; border-radius:8px; background:transparent; border:1px solid rgba(212,175,55,0.08); color:var(--accent-soft); cursor:pointer">إلغاء</button>
-        <button id="modal-confirm" style="padding:8px 12px; border-radius:8px; background:var(--accent); border:none; color:#111; font-weight:700; cursor:pointer">متابعة للدفع</button>
-      </div>
+        <section class="contact-info" id="contact">
+            <h3><i class="fas fa-star"></i> الأستاذ محمد سلهب <i class="fas fa-star"></i></h3>
+            <div class="contact-details">
+                <div class="contact-item"><i class="fas fa-phone-alt"></i><h4>رقم التواصل</h4><a href="tel:00966593436094">00966593436094</a></div>
+                <div class="contact-item"><i class="fab fa-whatsapp"></i><h4>واتساب</h4><a href="https://wa.me/966593436094">00966593436094</a></div>
+                <div class="contact-item"><i class="fab fa-paypal"></i><h4>PayPal</h4><a href="#">paypal.me/yourusername</a></div>
+            </div>
+            <div class="private-note"><i class="fas fa-crown"></i> للتواصل المباشر: <strong>00966593436094</strong> <i class="fas fa-crown"></i></div>
+        </section>
     </div>
-  </div>
 
-  <script>
-    // Off-canvas menu toggle (3D slide)
-    const hamburger = document.getElementById('hamburger');
-    const offcanvas = document.getElementById('mobile-menu');
-    const closeCanvas = document.getElementById('close-offcanvas');
+    <footer>
+        <div class="footer-links"><a href="#">عن الأستاذ محمد سلهب</a><a href="#">الشروط والأحكام</a><a href="#">سياسة الخصوصية</a></div>
+        <p>جميع الحقوق محفوظة © 2024 - الأستاذ محمد سلهب</p>
+        <p class="gold-text">✦ الموسيقى العربية الأصيلة ✦</p>
+    </footer>
 
-    function openMenu() {
-      offcanvas.classList.add('open');
-      offcanvas.setAttribute('aria-hidden','false');
-      hamburger.setAttribute('aria-expanded','true');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeMenu(){
-      offcanvas.classList.remove('open');
-      offcanvas.setAttribute('aria-hidden','true');
-      hamburger.setAttribute('aria-expanded','false');
-      document.body.style.overflow = '';
-    }
-    hamburger.addEventListener('click', openMenu);
-    closeCanvas.addEventListener('click', closeMenu);
-    window.closeMenu = closeMenu; // for inline onclick links
+    <script>
+        // بيانات المنتجات
+        const sheetMusicProducts = [
+            { id: 1, title: 'نوتة "أم كلثوم - أنت عمري" (نسخة نادرة)', description: 'نوتة كاملة بخط اليد مع تحليل مقامي مفصل', price: 25, type: '📜 نوتة نادرة' },
+            { id: 2, title: 'نوتة "فيروز - سألوني الناس" (الأصلية)', description: 'النوتة الأصلية مع شرح المقامات والتحويلات', price: 20, type: '📜 نوتة موسيقية' },
+            { id: 3, title: 'نوتة "محمد عبد الوهاب - أنت عمري"', description: 'نسخة مصححة مع ملاحظات الأستاذ محمد', price: 30, type: '📜 نوتة نادرة' },
+            { id: 4, title: 'نوتة "عبد الحليم حافظ - قارئة الفنجان"', description: 'نوتة كاملة مع التوزيع الأوركسترالي', price: 35, type: '📜 نوتة موسيقية' }
+        ];
+        const videoProducts = [
+            { id: 5, title: '🎥 دورة المقامات العربية - المستوى الأول', description: '12 فيديو حصري مع تمارين تطبيقية', price: 75, type: '🎬 دورة مصورة' },
+            { id: 6, title: '🎥 تقنيات العزف على العود - احتراف', description: 'دورة متقدمة مع الأستاذ محمد', price: 95, type: '🎬 دورة حصرية' },
+            { id: 7, title: '🎥 قراءة النوتة للمحترفين', description: 'من الصفر إلى الاحتراف في 10 دروس', price: 65, type: '🎬 دورة مصورة' },
+            { id: 8, title: '🎥 أسرار التلحين والتوزيع', description: 'تعلم كيف تلحن أغنية كاملة', price: 85, type: '🎬 دورة حصرية' }
+        ];
 
-    // Modal handling for subscribe buttons
-    const modalBackdrop = document.getElementById('modal-backdrop');
-    const modalClose = document.getElementById('modal-close');
-    const modalConfirm = document.getElementById('modal-confirm');
+        let cart = [], cartCount = 0;
 
-    document.querySelectorAll('.subscribe-btn').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
-        const plan = e.currentTarget.dataset.plan || 'اشتراك';
-        document.getElementById('modal-title').textContent = 'تأكيد ' + (plan === 'weekly' ? 'اشتراك أسبوعي' : plan === 'monthly' ? 'اشتراك شهري' : 'اشتراك سنوي');
-        document.getElementById('modal-desc').textContent = 'شكراً لاختيارك ' + (plan === 'weekly' ? 'الاشتراك الأسبوعي.' : plan === 'monthly' ? 'الاشتراك الشهري.' : 'الاشتراك السنوي.') + ' سيتم توجيهك لصفحة الدفع.';
-        modalBackdrop.classList.add('open');
-        modalBackdrop.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-      })
-    });
-    modalClose.addEventListener('click', ()=>{ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='';});
-    modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop){ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
-    modalConfirm.addEventListener('click', ()=>{
-      // TODO: redirect to actual payment flow
-      alert('سيتم توجيهك لبوابة الدفع (استبدل alert بعملية الدفع الحقيقية).');
-      modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='';
-    });
+        function loadProducts() {
+            const sheetContainer = document.getElementById('sheetMusicProducts');
+            const videoContainer = document.getElementById('videoProducts');
+            sheetMusicProducts.forEach(p => {
+                sheetContainer.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-image"><i class="fas fa-music"></i></div>
+                        <div class="product-info">
+                            <span class="product-type">${p.type}</span>
+                            <h3 class="product-title">${p.title}</h3>
+                            <p class="product-description">${p.description}</p>
+                            <div class="product-price">$${p.price}</div>
+                            <button class="add-to-cart" onclick="addToCart(${p.id})"><i class="fas fa-shopping-cart"></i> أضف إلى السلة</button>
+                        </div>
+                    </div>
+                `;
+            });
+            videoProducts.forEach(p => {
+                videoContainer.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-image"><i class="fas fa-video"></i></div>
+                        <div class="product-info">
+                            <span class="product-type">${p.type}</span>
+                            <h3 class="product-title">${p.title}</h3>
+                            <p class="product-description">${p.description}</p>
+                            <div class="product-price">$${p.price}</div>
+                            <button class="add-to-cart" onclick="addToCart(${p.id})"><i class="fas fa-shopping-cart"></i> أضف إلى السلة</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
-    // Oud parallax tilt (desktop only)
-    const oud = document.querySelector('.oud-3d');
-    if(oud && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
-      window.addEventListener('pointermove', (ev)=>{
-        const w = window.innerWidth, h = window.innerHeight;
-        const cx = w/2, cy = h/2;
-        const dx = (ev.clientX - cx)/cx; // -1 .. 1
-        const dy = (ev.clientY - cy)/cy;
-        const rx = dy * 6; // rotateX
-        const ry = -dx * 6; // rotateY
-        oud.style.transform = `translateY(-50%) rotateY(${ry}deg) rotateX(${rx}deg) rotate(-10deg)`;
-      });
-      window.addEventListener('pointerleave', ()=>{ oud.style.transform = 'translateY(-50%) rotateY(-16deg) rotate(-10deg)'; })
-    }
-
-    // Close menu with escape
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape'){
-        closeMenu();
-        modalBackdrop.classList.remove('open');
-        modalBackdrop.setAttribute('aria-hidden','true');
-        document.body.style.overflow='';
-      }
-    });
-  </script>
-</body>
-</html>
+        function addToCart(id) {
+            let product = [...sheetMusicProducts, ...videoProducts].find(p => p.id === id);
+       
