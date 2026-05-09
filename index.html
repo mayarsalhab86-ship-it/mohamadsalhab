@@ -3,353 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموسيقار محمد سلهب | عالم الموسيقى العربية</title>
+    <title>الموسيقار محمد سلهب | فن العود والأصالة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #d4af37;
-            --light-gold: #f5e6b3;
-            --dark-bg: #050505;
-            --card-bg: #121212;
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --dark: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(212, 175, 55, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--dark-bg);
+            background-color: var(--dark);
             color: #fff;
-            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* تأثير الخلفية الموسيقية */
-        .music-bg {
+        /* خلفية موسيقية متحركة */
+        .bg-vibe {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%);
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
             z-index: -1;
-            opacity: 0.6;
         }
 
-        /* الهيدر */
+        /* الهيدر الزجاجي */
         .navbar {
-            background: rgba(5, 5, 5, 0.9);
+            background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(15px);
-            padding: 1.2rem 8%;
+            padding: 1rem 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border);
         }
 
-        .logo {
-            font-family: 'Amiri', serif;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--gold);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
+        .logo { font-family: 'Amiri', serif; font-size: 1.8rem; color: var(--gold); text-decoration: none; }
 
-        .nav-links { display: flex; gap: 2.5rem; }
         .nav-links a {
-            text-decoration: none;
-            color: #eee;
-            font-weight: 400;
-            transition: var(--transition);
-            font-size: 1rem;
-            position: relative;
+            color: #fff; text-decoration: none; margin-right: 2rem;
+            font-weight: 300; transition: 0.4s;
         }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0; height: 2px;
-            bottom: -5px; left: 0;
-            background: var(--gold);
-            transition: var(--transition);
-        }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
 
-        /* قسم الهيرو */
+        /* قسم الهيرو بتأثير انسيابي */
         .hero {
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 0 20px;
-            background: url('https://images.unsplash.com/photo-1520529611472-da003972f690?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=2000');
+            background-attachment: fixed;
+            background-size: cover;
         }
 
         .hero-content h1 {
             font-family: 'Amiri', serif;
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 8vw, 5rem);
             margin-bottom: 1rem;
-            background: linear-gradient(to right, #d4af37, #f5e6b3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1.5s ease;
         }
 
-        .hero-content p {
-            font-size: 1.4rem;
-            color: #ccc;
-            margin-bottom: 2rem;
-        }
-
-        /* الأقسام */
-        section { padding: 100px 8%; }
-
-        .section-title {
-            text-align: center;
-            font-family: 'Amiri', serif;
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 50px;
-            position: relative;
-        }
-        .section-title::after {
-            content: '𝄢';
-            display: block;
-            font-size: 1.5rem;
-            margin-top: 10px;
-            opacity: 0.5;
-        }
-
-        /* شبكة المنتجات */
-        .products-grid {
+        /* بطاقات النوتات المتطورة */
+        .section-padding { padding: 100px 8%; }
+        
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2.5rem;
+            gap: 2rem;
         }
 
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
-        }
-
-        .product-card i {
-            font-size: 3rem;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fff;
-            margin: 15px 0;
-        }
-
-        .btn-buy {
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 10px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        .btn-buy:hover {
-            background: var(--gold);
-            color: #000;
-        }
-
-        /* فورم الطلب الخاص */
-        .custom-section {
-            background: #0a0a0a;
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 50px;
+            padding: 2rem;
+            text-align: center;
+            transition: 0.5s;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        .form-group { margin-bottom: 20px; }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            background: #151515;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 8px;
-            font-family: 'Cairo';
-        }
-        .form-group input:focus { border-color: var(--gold); outline: none; }
+        .card.visible { opacity: 1; transform: translateY(0); }
 
-        .whatsapp-btn {
-            background: #25d366;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
+        .card:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: var(--gold);
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* مشغل الموسيقى العائم */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1001;
+            background: var(--gold);
+            width: 60px; height: 60px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
-        .whatsapp-btn:hover { transform: scale(1.02); background: #20ba5a; }
-
-        footer {
-            padding: 50px 8%;
-            background: #000;
-            text-align: center;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            animation: pulse 2s infinite;
         }
 
-        .social-links { margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; }
-        .social-links a { color: var(--gold); font-size: 1.5rem; transition: 0.3s; }
-        .social-links a:hover { color: #fff; }
-
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* يمكن إضافة قائمة موبايل هنا */
+        /* زر التواصل واتساب */
+        .btn-gold {
+            background: linear-gradient(45deg, #d4af37, #f5e6b3);
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+            border: none;
         }
+        .btn-gold:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--gold); }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* تأثير التمرير الموسيقي */
+        .reveal { opacity: 0; transform: translateY(50px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
     </style>
 </head>
 <body>
 
-    <div class="music-bg"></div>
+    <div class="bg-vibe"></div>
+
+    <!-- مشغل الموسيقى -->
+    <div class="music-control" onclick="toggleMusic()">
+        <i class="fas fa-play" id="music-icon" style="color: #000; font-size: 1.5rem;"></i>
+    </div>
+    <audio id="bgAudio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <nav class="navbar">
-        <a href="#" class="logo">أ. محمد سلهب</a>
+        <a href="#" class="logo">محمد سلهب</a>
         <div class="nav-links">
             <a href="#home">الرئيسية</a>
-            <a href="#about">عن الأستاذ</a>
-            <a href="#store">متجر النوتات</a>
-            <a href="#custom">الطلبات الخاصة</a>
+            <a href="#notes">النوتات</a>
+            <a href="#order">طلب خاص</a>
+            <a href="https://www.tiktok.com/@YOUR_USER" target="_blank"><i class="fab fa-tiktok"></i></a>
         </div>
     </nav>
 
-    <header id="home" class="hero">
+    <section id="home" class="hero">
         <div class="hero-content">
-            <h1>إبداع الأوتار بروح الأصالة</h1>
-            <p>تعلم أسرار الموسيقى العربية والمقامات الشرقية مع خبير الموسيقى الأستاذ محمد سلهب</p>
-            <button class="btn-buy" style="width: auto; padding: 15px 40px; font-size: 1.1rem;" onclick="location.href='#store'">تصفح النوتات النادرة</button>
-        </div>
-    </header>
-
-    <section id="about">
-        <h2 class="section-title">رسالة موسيقية</h2>
-        <div style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.2rem; color: #ddd;">
-            <p>نحن لا نقدم مجرد نوتات، بل نسعى لتوثيق التراث الموسيقي العربي بأعلى معايير الدقة العلمية والجمالية. بخبرة سنوات في العزف والتدريس، نضع بين أيديكم عصارة الفن الأصيل.</p>
+            <h1>سحر الشرق بأوتار معاصرة</h1>
+            <p style="font-size: 1.5rem; font-weight: 300; margin-bottom: 2rem;">تعليم، تدوين، وإرث موسيقي مع الأستاذ محمد سلهب</p>
+            <a href="#notes" class="btn-gold">اكتشف المكتبة الموسيقية</a>
         </div>
     </section>
 
-    <section id="store">
-        <h2 class="section-title">متجر النوتات والمحتوى التعليمي</h2>
-        <div class="products-grid" id="productsList">
-            <!-- سيتم تعبئتها بواسطة JS -->
-        </div>
-    </section>
-
-    <section id="custom">
-        <div class="custom-section">
-            <h2 class="section-title">طلب تدوين أو دورة خاصة</h2>
-            <p style="text-align: center; margin-bottom: 30px;">هل تبحث عن نوتة معينة؟ أو ترغب في دورة تعليمية مخصصة لمقام معين؟</p>
-            <div class="form-group">
-                <input type="text" id="name" placeholder="اسمك الكريم">
+    <section id="notes" class="section-padding">
+        <h2 style="text-align: center; font-family: 'Amiri', serif; font-size: 3rem; color: var(--gold); margin-bottom: 3rem;">مكتبة النوتات</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <i class="fas fa-music" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                <h3>نوتة أنت عمري</h3>
+                <p>تدوين دقيق لكل العرب الموسيقية</p>
+                <p style="margin: 1rem 0; font-weight: bold;">$25.00</p>
+                <button class="btn-gold" onclick="order('أنت عمري')">شراء الآن</button>
             </div>
-            <div class="form-group">
-                <textarea id="request" rows="5" placeholder="ما هو العمل الموسيقي الذي ترغب بتدوينه أو تعلمه؟"></textarea>
+            <div class="card reveal">
+                <i class="fas fa-microphone-lines" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                <h3>دورة المقامات</h3>
+                <p>شرح فيديو مكثف للمقامات الشرقية</p>
+                <p style="margin: 1rem 0; font-weight: bold;">$80.00</p>
+                <button class="btn-gold" onclick="order('دورة المقامات')">انضم الآن</button>
             </div>
-            <button class="whatsapp-btn" onclick="sendWhatsApp()">
-                <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
-            </button>
+            <div class="card reveal">
+                <i class="fas fa-file-invoice" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                <h3>طلب تدوين خاص</h3>
+                <p>حول أي أغنية تحبها إلى نوتة احترافية</p>
+                <p style="margin: 1rem 0; font-weight: bold;">حسب العمل</p>
+                <button class="btn-gold" onclick="order('تدوين خاص')">اطلب الآن</button>
+            </div>
         </div>
     </section>
 
-    <footer>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
+    <section id="order" class="section-padding" style="background: rgba(212, 175, 55, 0.02);">
+        <div style="max-width: 600px; margin: 0 auto; text-align: center;" class="reveal">
+            <h2 style="font-family: 'Amiri', serif; font-size: 3rem; color: var(--gold);">تواصل مباشرة</h2>
+            <p style="margin-bottom: 2rem;">للدورات التدريبية أو الاستشارات الفنية</p>
+            <a href="https://wa.me/966593436094" class="btn-gold" style="padding: 20px 50px; font-size: 1.2rem;">
+                <i class="fab fa-whatsapp"></i> مراسلة الأستاذ محمد
+            </a>
         </div>
-        <p>جميع الحقوق محفوظة © 2026 - الموسيقار محمد سلهب</p>
-        <p style="font-size: 0.8rem; margin-top: 10px; color: #666;">صمم بكل حب لعشاق الطرب العربي</p>
+    </section>
+
+    <footer style="padding: 3rem; text-align: center; border-top: 1px solid var(--border);">
+        <p>© 2026 محمد سلهب - جميع الحقوق محفوظة</p>
+        <div style="margin-top: 1rem; font-size: 1.5rem;">
+            <a href="#" style="color: var(--gold); margin: 0 10px;"><i class="fab fa-youtube"></i></a>
+            <a href="#" style="color: var(--gold); margin: 0 10px;"><i class="fab fa-tiktok"></i></a>
+            <a href="#" style="color: var(--gold); margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+        </div>
     </footer>
 
     <script>
-        // بيانات المنتجات
-        const products = [
-            { id: 1, title: 'نوتة "أنت عمري" - تدوين احترافي', price: '25$', icon: 'fa-file-audio' },
-            { id: 2, title: 'مجموعة نوتات أم كلثوم النادرة', price: '99$', icon: 'fa-compact-disc' },
-            { id: 3, title: 'دورة إتقان مقامات البياتي والكرد', price: '75$', icon: 'fa-chalkboard-teacher' },
-            { id: 4, title: 'نوتة "سألوني الناس" - توزيع خاص', price: '20$', icon: 'fa-music' }
-        ];
+        // وظيفة تشغيل الموسيقى السلسة
+        const audio = document.getElementById('bgAudio');
+        const icon = document.getElementById('music-icon');
+        
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                icon.classList.replace('fa-play', 'fa-pause');
+            } else {
+                audio.pause();
+                icon.classList.replace('fa-pause', 'fa-play');
+            }
+        }
 
-        const productsContainer = document.getElementById('productsList');
+        // أنيميشن الظهور عند التمرير
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                    reveals[i].classList.add("visible");
+                }
+            }
+        }
 
-        products.forEach(p => {
-            productsContainer.innerHTML += `
-                <div class="product-card">
-                    <i class="fas ${p.icon}"></i>
-                    <h3>${p.title}</h3>
-                    <div class="price">${p.price}</div>
-                    <button class="btn-buy" onclick="orderProduct('${p.title}')">اطلب الآن</button>
-                </div>
-            `;
-        });
+        window.addEventListener("scroll", reveal);
 
-        function orderProduct(title) {
-            const msg = `مرحباً أستاذ محمد، أريد الاستفسار عن شراء: ${title}`;
+        function order(item) {
+            const msg = `مرحباً أستاذ محمد، أريد طلب: ${item}`;
             window.open(`https://wa.me/966593436094?text=${encodeURIComponent(msg)}`);
         }
 
-        function sendWhatsApp() {
-            const name = document.getElementById('name').value;
-            const request = document.getElementById('request').value;
-            if(!name || !request) return alert("يرجى ملء البيانات");
-            
-            const fullMsg = `مرحباً أستاذ محمد سلهب،\nأنا ${name}، أرغب في طلب خاص:\n${request}`;
-            window.open(`https://wa.me/966593436094?text=${encodeURIComponent(fullMsg)}`);
-        }
-
-        // تأثير تحريك الهيرو مع الماوس بشكل لطيف
-        document.addEventListener('mousemove', (e) => {
-            const moveX = (e.clientX - window.innerWidth/2) / 50;
-            const moveY = (e.clientY - window.innerHeight/2) / 50;
-            document.querySelector('.hero-content').style.transform = `translate(${moveX}px, ${moveY}px)`;
-        });
+        // تشغيل الموسيقى تلقائياً عند أول حركة للمستخدم (لتجنب قيود المتصفح)
+        document.body.addEventListener('click', () => {
+            // audio.play(); 
+            // icon.classList.replace('fa-play', 'fa-pause');
+        }, { once: true });
     </script>
 </body>
 </html>
