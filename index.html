@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموسيقار محمد سلهب | العراقة والحداثة</title>
+    <title>الأستاذ محمد سلهب | أكاديمية تدوين المقامات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #d4af37;
-            --dark: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
-            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --dark: #080808;
+            --overlay: rgba(0, 0, 0, 0.7);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -23,190 +22,203 @@
             overflow-x: hidden;
         }
 
-        /* فيديو الخلفية */
-        .video-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: -1;
+        /* منطقة الفيديو التعليمي */
+        .hero-video-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
-        .video-bg iframe {
+
+        /* جعل فيديو اليوتيوب خلفية أو واجهة رئيسية */
+        .video-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .video-container iframe {
             width: 100vw; height: 56.25vw; /* 16:9 ratio */
             min-height: 100vh; min-width: 177.77vh;
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
+            opacity: 0.5; /* تأثير سينمائي */
             pointer-events: none;
-            opacity: 0.4; /* لتقليل التشتيت */
         }
 
-        /* الهيدر */
-        header {
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-            position: fixed;
-            width: 100%;
-            top: 0; z-index: 1000;
-        }
-
-        .logo { font-family: 'Amiri', serif; font-size: 2.2rem; color: var(--gold); text-decoration: none; font-weight: 700; }
-
-        .nav-links a { color: #fff; text-decoration: none; margin-right: 25px; transition: var(--transition); font-weight: 300; }
-        .nav-links a:hover { color: var(--gold); letter-spacing: 1px; }
-
-        /* القسم الرئيسي */
-        .hero {
-            height: 100vh;
+        .hero-overlay {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            background: radial-gradient(circle, transparent, var(--dark));
+            width: 100%; height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            background: rgba(0,0,0,0.5);
         }
 
-        .hero h1 { font-family: 'Amiri', serif; font-size: clamp(3rem, 10vw, 6rem); color: var(--gold); line-height: 1; }
-        .hero p { font-size: 1.5rem; font-weight: 300; margin: 20px 0; max-width: 800px; }
-
-        /* قسم المقالات (محراب الموسيقى) */
-        .blog-section { padding: 80px 8%; background: #080808; }
-        .article-card {
-            background: var(--glass);
-            border-right: 4px solid var(--gold);
-            padding: 25px;
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-        .article-card:hover { background: rgba(212, 175, 55, 0.05); transform: translateX(-10px); }
-
-        /* المتجر الذكي */
-        .store-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 50px 8%;
+        .hero-overlay h1 {
+            font-family: 'Amiri', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--gold);
+            text-shadow: 2px 2px 10px #000;
+            margin-bottom: 10px;
         }
 
-        .product-box {
-            background: #111;
-            border: 1px solid #222;
-            padding: 40px 20px;
-            border-radius: 5px;
-            text-align: center;
-            transition: var(--transition);
-            position: relative;
+        .hero-overlay p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+            font-weight: 300;
         }
-        .product-box:hover { border-color: var(--gold); background: #000; }
-        .product-box i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; }
 
-        .btn-order {
+        /* تنسيق الأزرار */
+        .btn-main {
             background: var(--gold);
             color: #000;
-            padding: 12px 35px;
-            border: none;
-            border-radius: 2px;
-            cursor: pointer;
-            font-weight: 900;
-            margin-top: 20px;
-            transition: var(--transition);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            border: 2px solid var(--gold);
         }
-        .btn-order:hover { letter-spacing: 2px; box-shadow: 0 0 20px var(--gold); }
 
-        /* فوتر */
-        footer { padding: 60px 8%; text-align: center; border-top: 1px solid #222; }
-        .social-link { font-size: 2rem; color: var(--gold); margin: 0 15px; transition: 0.3s; }
-        .social-link:hover { transform: scale(1.3); color: #fff; }
+        .btn-main:hover {
+            background: transparent;
+            color: var(--gold);
+            box-shadow: 0 0 20px var(--gold);
+        }
 
-        /* أنيميشن */
-        .fade-in { animation: fadeIn 2s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* قسم المتجر والخدمات */
+        .content-section { padding: 80px 8%; }
+        
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            transition: 0.4s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .feature-card i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; }
+
+        /* تذييل الصفحة */
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: #000;
+            border-top: 1px solid #222;
+        }
+
+        .social-icons a {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: 0.3s;
+        }
+        .social-icons a:hover { color: #fff; transform: scale(1.2); }
 
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="#" class="logo">محمد سلهب</a>
-        <nav class="nav-links">
-            <a href="#home">الرئيسية</a>
-            <a href="#blog">دروس ومقالات</a>
-            <a href="#store">المتجر</a>
-            <a href="https://wa.me/966593436094" target="_blank">تواصل</a>
-        </nav>
-    </header>
+    <!-- الهيدر -->
+    <nav style="position:fixed; width:100%; z-index:100; padding:20px 8%; background:rgba(0,0,0,0.8); backdrop-filter:blur(5px); display:flex; justify-content:space-between; align-items:center;">
+        <div style="font-family:'Amiri'; font-size:1.8rem; color:var(--gold); font-weight:bold;">محمد سلهب</div>
+        <div style="display:flex; gap:20px;">
+            <a href="#home" style="color:#fff; text-decoration:none;">الرئيسية</a>
+            <a href="#lessons" style="color:#fff; text-decoration:none;">دروسنا</a>
+            <a href="https://wa.me/966593436094" style="color:var(--gold); text-decoration:none; font-weight:bold;">اطلب الآن</a>
+        </div>
+    </nav>
 
-    <div class="video-bg">
-        <!-- دمج فيديو جوليا بطرس كخلفية -->
-        <iframe src="https://www.youtube.com/embed/_D2fK-HhTvo?autoplay=1&mute=1&controls=0&loop=1&playlist=_D2fK-HhTvo" frameborder="0"></iframe>
+    <!-- واجهة الموقع بالفيديو الجديد -->
+    <div class="hero-video-section" id="home">
+        <div class="video-container">
+            <!-- تم وضع فيديو الأستاذ محمد (كثرة أسماء المقامات) -->
+            <iframe src="https://www.youtube.com/embed/PwlLKa6bDNo?autoplay=1&mute=1&controls=0&loop=1&playlist=PwlLKa6bDNo" frameborder="0"></iframe>
+        </div>
+        <div class="hero-overlay">
+            <h1>لا تدع أسماء المقامات تتوهك</h1>
+            <p>نفك عقد التدوين الموسيقي ونبسط لك المقامات الشرقية بأسلوب أكاديمي احترافي مع الأستاذ محمد سلهب.</p>
+            <div style="display: flex; gap: 15px;">
+                <a href="#lessons" class="btn-main">استكشف الدورات</a>
+                <a href="https://www.youtube.com/watch?v=PwlLKa6bDNo" target="_blank" class="btn-main" style="background:transparent; color:#fff; border-color:#fff;">شاهد الدرس كاملاً</a>
+            </div>
+        </div>
     </div>
 
-    <section id="home" class="hero">
-        <div class="fade-in">
-            <p style="color: var(--gold); letter-spacing: 8px;">MOHAMAD SALHAB</p>
-            <h1>شجن الأوتار</h1>
-            <p>حيث تلتقي التقنية الأكاديمية بإحساس الشرق الأصيل</p>
-            <a href="#store" class="btn-order" style="text-decoration: none;">اطلب نوتتك الآن</a>
-        </div>
-    </section>
-
-    <section id="blog" class="blog-section">
-        <h2 style="font-family: 'Amiri', serif; font-size: 3rem; color: var(--gold); margin-bottom: 40px;">محراب الموسيقى (مقالات تعليمية)</h2>
-        <div class="article-card">
-            <h3>أسرار مقام البياتي في عزف الأستاذ محمد</h3>
-            <p>كيف تصل إلى ذروة السلطنة في التقاسيم.. قريباً</p>
-        </div>
-        <div class="article-card">
-            <h3>تحليل تدوين أغنية "عاب مجدك"</h3>
-            <p>دراسة في القفزات اللحنية والقوة التعبيرية في لحن جوليا بطرس.</p>
-        </div>
-    </section>
-
-    <section id="store" class="store-grid">
-        <div class="product-box">
-            <i class="fas fa-file-music"></i>
-            <h3>نوتة عاب مجدك</h3>
-            <p>تدوين دقيق وشامل</p>
-            <p style="color: var(--gold); font-size: 1.5rem; margin: 15px 0;">25$</p>
-            <button class="btn-order" onclick="buy('عاب مجدك')">شراء عبر واتساب</button>
-        </div>
-        <div class="product-box">
-            <i class="fas fa-graduation-cap"></i>
-            <h3>دورة إعداد العازف</h3>
-            <p>من الصفر إلى الاحتراف</p>
-            <p style="color: var(--gold); font-size: 1.5rem; margin: 15px 0;">150$</p>
-            <button class="btn-order" onclick="buy('دورة إعداد العازف')">سجل الآن</button>
-        </div>
-        <div class="product-box">
-            <i class="fab fa-tiktok"></i>
-            <h3>دروس تيك توك الخاصة</h3>
-            <p>محتوى حصري للمشتركين</p>
-            <p style="color: var(--gold); font-size: 1.5rem; margin: 15px 0;">50$</p>
-            <button class="btn-order" onclick="buy('دروس تيك توك')">اشترك الآن</button>
+    <!-- قسم الخدمات -->
+    <section class="content-section" id="lessons">
+        <h2 class="section-title">خدماتنا الموسيقية</h2>
+        <div class="grid-container">
+            <div class="feature-card">
+                <i class="fas fa-pen-nib"></i>
+                <h3>تدوين النوتات</h3>
+                <p>نكتب لك النوتات الموسيقية بدقة متناهية، مع مراعاة كافة تفاصيل العرب والزخارف الشرقية.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chalkboard-user"></i>
+                <h3>دورات المقامات</h3>
+                <p>دورة شاملة تحل لك معضلة الأسماء المتعددة للمقامات وتجعلك تعزف بوعي وفهم.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-scroll"></i>
+                <h3>طلبات خاصة</h3>
+                <p>هل لديك لحن خاص؟ نقوم بتدوينه وتحويله إلى نوتة جاهزة للعزف الأوركسترالي.</p>
+            </div>
         </div>
     </section>
 
     <footer>
-        <div style="margin-bottom: 30px;">
-            <a href="https://www.tiktok.com/@mohamad.salhab" class="social-link" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-            <a href="https://wa.me/966593436094" class="social-link"><i class="fab fa-whatsapp"></i></a>
+        <div class="social-icons" style="margin-bottom: 20px;">
+            <a href="https://www.tiktok.com/@mohamad.salhab" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/966593436094" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
-        <p>© 2026 الأستاذ محمد سلهب | تصميم يحاكي روح الموسيقى</p>
+        <p>© 2026 الأستاذ محمد سلهب - مرجعيتك في تدوين الموسيقى العربية</p>
     </footer>
 
     <script>
-        function buy(product) {
-            const message = `مرحباً أستاذ محمد، أنا مهتم بـ ${product} من خلال موقعك الإلكتروني.`;
-            window.open(`https://wa.me/966593436094?text=${encodeURIComponent(message)}`);
-        }
-
-        // تأثيرات التمرير السلسة للعناصر
+        // أنيميشن بسيط عند ظهور العناصر أثناء التمرير
+        const cards = document.querySelectorAll('.feature-card');
         window.addEventListener('scroll', () => {
-            let value = window.scrollY;
-            document.querySelector('.hero h1').style.transform = `translateY(${value * 0.3}px)`;
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if(cardTop < window.innerHeight - 50) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
         });
     </script>
 </body>
