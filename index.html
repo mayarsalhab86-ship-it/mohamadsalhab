@@ -3,269 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموسيقار محمد سلهب | فن العود والأصالة</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>رحلتي | لحجز السيارات والرحلات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #d4af37;
-            --dark: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(212, 175, 55, 0.3);
+            --primary: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--dark);
-            color: #fff;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
             overflow-x: hidden;
         }
-
-        /* خلفية موسيقية متحركة */
-        .bg-vibe {
+        
+        /* شاشة الانتقال (السيارة والطريق) */
+        .transition-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
-            z-index: -1;
+            background-color: var(--dark);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.6s ease-in-out;
+        }
+        .transition-screen.active {
+            transform: translateX(0);
+        }
+        .road {
+            width: 100%; height: 10px;
+            background: #fff;
+            position: relative;
+            border-top: 5px dashed #ccc;
+        }
+        .car-animation {
+            font-size: 4rem;
+            position: absolute;
+            top: -60px;
+            left: -100px;
+            animation: drive 1s infinite linear;
+        }
+        @keyframes drive {
+            0% { left: -10%; }
+            100% { left: 110%; }
         }
 
-        /* الهيدر الزجاجي */
-        .navbar {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(15px);
-            padding: 1rem 8%;
+        /* شريط التنقل */
+        nav {
+            background: var(--dark);
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0; z-index: 1000;
-            border-bottom: 1px solid var(--border);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+        nav h1 { margin: 0; color: var(--primary); }
+        nav ul { list-style: none; display: flex; gap: 20px; padding: 0; margin: 0; }
+        nav ul li a { color: white; text-decoration: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        nav ul li a:hover { color: var(--primary); }
 
-        .logo { font-family: 'Amiri', serif; font-size: 1.8rem; color: var(--gold); text-decoration: none; }
-
-        .nav-links a {
-            color: #fff; text-decoration: none; margin-right: 2rem;
-            font-weight: 300; transition: 0.4s;
+        /* الأقسام */
+        .section {
+            padding: 60px 20px;
+            display: none;
+            min-height: 80vh;
         }
-        .nav-links a:hover { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
-
-        /* قسم الهيرو بتأثير انسيابي */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=2000');
-            background-attachment: fixed;
-            background-size: cover;
+        .section.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
         }
-
-        .hero-content h1 {
-            font-family: 'Amiri', serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            margin-bottom: 1rem;
-            animation: fadeInDown 1.5s ease;
-        }
-
-        /* بطاقات النوتات المتطورة */
-        .section-padding { padding: 100px 8%; }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: 0.5s;
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .card.visible { opacity: 1; transform: translateY(0); }
-
-        .card:hover {
-            background: rgba(212, 175, 55, 0.05);
-            border-color: var(--gold);
-            transform: translateY(-10px) scale(1.02);
-        }
-
-        /* مشغل الموسيقى العائم */
-        .music-control {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1001;
-            background: var(--gold);
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        /* زر التواصل واتساب */
-        .btn-gold {
-            background: linear-gradient(45deg, #d4af37, #f5e6b3);
-            color: #000;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            transition: 0.3s;
-            border: none;
-        }
-        .btn-gold:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--gold); }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-50px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        /* البطاقات */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
         }
-
-        /* تأثير التمرير الموسيقي */
-        .reveal { opacity: 0; transform: translateY(50px); transition: 1s all ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        .card h3 { color: var(--primary); }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background: #d68910; }
     </style>
 </head>
 <body>
 
-    <div class="bg-vibe"></div>
-
-    <!-- مشغل الموسيقى -->
-    <div class="music-control" onclick="toggleMusic()">
-        <i class="fas fa-play" id="music-icon" style="color: #000; font-size: 1.5rem;"></i>
-    </div>
-    <audio id="bgAudio" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <nav class="navbar">
-        <a href="#" class="logo">محمد سلهب</a>
-        <div class="nav-links">
-            <a href="#home">الرئيسية</a>
-            <a href="#notes">النوتات</a>
-            <a href="#order">طلب خاص</a>
-            <a href="https://www.tiktok.com/@YOUR_USER" target="_blank"><i class="fab fa-tiktok"></i></a>
+    <!-- شاشة حركة السيارة عند الانتقال -->
+    <div class="transition-screen" id="transitionScreen">
+        <div class="road">
+            <div class="car-animation">🚕</div>
         </div>
+    </div>
+
+    <!-- القائمة العلوية -->
+    <nav>
+        <h1>رحلتي</h1>
+        <ul>
+            <li><a onclick="navigate('home')">الرئيسية</a></li>
+            <li><a onclick="navigate('vehicles')">أسطولنا</a></li>
+            <li><a onclick="navigate('booking')">الحجز والمفاصلة</a></li>
+            <li><a onclick="navigate('special')">رحلات مميزة</a></li>
+        </ul>
     </nav>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>سحر الشرق بأوتار معاصرة</h1>
-            <p style="font-size: 1.5rem; font-weight: 300; margin-bottom: 2rem;">تعليم، تدوين، وإرث موسيقي مع الأستاذ محمد سلهب</p>
-            <a href="#notes" class="btn-gold">اكتشف المكتبة الموسيقية</a>
-        </div>
-    </section>
+    <!-- قسم الرئيسية -->
+    <div id="home" class="section active">
+        <center>
+            <h2 style="font-size: 3rem; color: var(--dark);">وجهتك القادمة، أسهل من أي وقت مضى</h2>
+            <p style="font-size: 1.2rem; max-width: 600px;">نقدم لك تجربة تنقل سلسة تلبي كافة احتياجاتك، من التوصيل السريع إلى الرحلات العائلية الممتعة. حدد سعرك ووجهتك، واترك الباقي علينا.</p>
+            <button onclick="navigate('vehicles')">ابدأ رحلتك الآن</button>
+        </center>
+    </div>
 
-    <section id="notes" class="section-padding">
-        <h2 style="text-align: center; font-family: 'Amiri', serif; font-size: 3rem; color: var(--gold); margin-bottom: 3rem;">مكتبة النوتات</h2>
-        <div class="grid">
-            <div class="card reveal">
-                <i class="fas fa-music" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
-                <h3>نوتة أنت عمري</h3>
-                <p>تدوين دقيق لكل العرب الموسيقية</p>
-                <p style="margin: 1rem 0; font-weight: bold;">$25.00</p>
-                <button class="btn-gold" onclick="order('أنت عمري')">شراء الآن</button>
+    <!-- قسم المركبات -->
+    <div id="vehicles" class="section">
+        <h2>اختر المركبة المناسبة لك</h2>
+        <div class="cards-container">
+            <div class="card">
+                <h3>🏍️ دراجة نارية</h3>
+                <p>لتوصيل الطلبات والأغراض بسرعة فائقة.</p>
+                <button>احجز الآن</button>
             </div>
-            <div class="card reveal">
-                <i class="fas fa-microphone-lines" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
-                <h3>دورة المقامات</h3>
-                <p>شرح فيديو مكثف للمقامات الشرقية</p>
-                <p style="margin: 1rem 0; font-weight: bold;">$80.00</p>
-                <button class="btn-gold" onclick="order('دورة المقامات')">انضم الآن</button>
+            <div class="card">
+                <h3>🚕 سيارة عادية</h3>
+                <p>مشاويرك اليومية داخل المدينة بكل راحة.</p>
+                <button>احجز الآن</button>
             </div>
-            <div class="card reveal">
-                <i class="fas fa-file-invoice" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
-                <h3>طلب تدوين خاص</h3>
-                <p>حول أي أغنية تحبها إلى نوتة احترافية</p>
-                <p style="margin: 1rem 0; font-weight: bold;">حسب العمل</p>
-                <button class="btn-gold" onclick="order('تدوين خاص')">اطلب الآن</button>
+            <div class="card">
+                <h3>🚐 فان عائلي</h3>
+                <p>مساحة واسعة للطلعات العائلية الممتعة.</p>
+                <button>احجز الآن</button>
+            </div>
+            <div class="card">
+                <h3>🚌 باص وسيارات كبيرة</h3>
+                <p>للسفر والرحلات الجماعية لمسافات طويلة.</p>
+                <button>احجز الآن</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="order" class="section-padding" style="background: rgba(212, 175, 55, 0.02);">
-        <div style="max-width: 600px; margin: 0 auto; text-align: center;" class="reveal">
-            <h2 style="font-family: 'Amiri', serif; font-size: 3rem; color: var(--gold);">تواصل مباشرة</h2>
-            <p style="margin-bottom: 2rem;">للدورات التدريبية أو الاستشارات الفنية</p>
-            <a href="https://wa.me/966593436094" class="btn-gold" style="padding: 20px 50px; font-size: 1.2rem;">
-                <i class="fab fa-whatsapp"></i> مراسلة الأستاذ محمد
-            </a>
+    <!-- قسم الحجز والمفاصلة -->
+    <div id="booking" class="section">
+        <h2>الحجز المسبق والمفاصلة</h2>
+        <div class="card" style="max-width: 600px; margin: auto; text-align: right;">
+            <p><strong>تحديد الموقع:</strong> (سيتم هنا دمج خريطة تفاعلية لتحديد نقطة الانطلاق والوصول)</p>
+            <p><strong>اقترح سعرك:</strong> أدخل السعر الذي تراه مناسباً للرحلة وانتظر عروض السائقين القريبين.</p>
+            <input type="number" placeholder="أدخل السعر المقترح" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; font-family: 'Cairo';">
+            <button style="width: 100%;">أرسل الطلب للسائقين</button>
         </div>
-    </section>
+    </div>
 
-    <footer style="padding: 3rem; text-align: center; border-top: 1px solid var(--border);">
-        <p>© 2026 محمد سلهب - جميع الحقوق محفوظة</p>
-        <div style="margin-top: 1rem; font-size: 1.5rem;">
-            <a href="#" style="color: var(--gold); margin: 0 10px;"><i class="fab fa-youtube"></i></a>
-            <a href="#" style="color: var(--gold); margin: 0 10px;"><i class="fab fa-tiktok"></i></a>
-            <a href="#" style="color: var(--gold); margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+    <!-- قسم المميزات -->
+    <div id="special" class="section">
+        <h2>رحلات مميزة على ذوقك</h2>
+        <p>نقدم برامج رحلات مصممة خصيصاً لتناسب ذوقك، مع خيارات مرنة للتوقف وسلاسة تامة في التنقل.</p>
+        <div class="cards-container">
+            <div class="card">
+                <h3>استكشاف الطبيعة</h3>
+                <p>رحلات هادئة بعيداً عن ضجيج المدينة.</p>
+            </div>
+            <div class="card">
+                <h3>رحلات العمل المريحة</h3>
+                <p>مركبات مجهزة لضمان راحتك أثناء السفر للعمل.</p>
+            </div>
         </div>
-    </footer>
+    </div>
 
+    <!-- السكربت الخاص بحركة الانتقال -->
     <script>
-        // وظيفة تشغيل الموسيقى السلسة
-        const audio = document.getElementById('bgAudio');
-        const icon = document.getElementById('music-icon');
-        
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play();
-                icon.classList.replace('fa-play', 'fa-pause');
-            } else {
-                audio.pause();
-                icon.classList.replace('fa-pause', 'fa-play');
-            }
+        function navigate(targetId) {
+            const screen = document.getElementById('transitionScreen');
+            
+            // تفعيل شاشة السيارة المتحركة
+            screen.classList.add('active');
+            
+            setTimeout(() => {
+                // إخفاء كل الأقسام
+                document.querySelectorAll('.section').forEach(sec => {
+                    sec.classList.remove('active');
+                });
+                // إظهار القسم المطلوب
+                document.getElementById(targetId).classList.add('active');
+                
+                // إخفاء شاشة السيارة
+                screen.classList.remove('active');
+            }, 800); // مدة حركة السيارة قبل إظهار الصفحة الجديدة
         }
-
-        // أنيميشن الظهور عند التمرير
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                    reveals[i].classList.add("visible");
-                }
-            }
-        }
-
-        window.addEventListener("scroll", reveal);
-
-        function order(item) {
-            const msg = `مرحباً أستاذ محمد، أريد طلب: ${item}`;
-            window.open(`https://wa.me/966593436094?text=${encodeURIComponent(msg)}`);
-        }
-
-        // تشغيل الموسيقى تلقائياً عند أول حركة للمستخدم (لتجنب قيود المتصفح)
-        document.body.addEventListener('click', () => {
-            // audio.play(); 
-            // icon.classList.replace('fa-play', 'fa-pause');
-        }, { once: true });
     </script>
 </body>
 </html>
